@@ -324,7 +324,7 @@ UsedLibrary="C:/Program Files/EAGLE-5.10.0/lbr/lee/lee.lbr"
 
 [Win_1]
 Type="Control Panel"
-Loc="657 86 1256 475"
+Loc="639 63 1238 452"
 State=2
 Number=0
 
