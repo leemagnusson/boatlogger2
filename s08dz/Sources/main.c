@@ -7,7 +7,10 @@
 #include "serial.h"
 #include "rprintf.h"
 #include "adc.h"
+#include "flags.h"
+#include "can.h"
 
+enum Flags mainFlags = 0;
 
 void main(void) {
 	unsigned int i;
@@ -21,13 +24,21 @@ void main(void) {
   init_leds();
   init_rtc();
   init_adc();
+  init_can();
   
   rprintf("Hello, World");
 
   for(;;) {
     //__RESET_WATCHDOG();	/* feeds the dog */
-    for(i=0;i<50000;i++);
-    toggle_led(LED2);
+    //for(i=0;i<50000;i++);
+
+	  while(!mainFlags);		// waiting for something to happen, will sleep here
+	  
+	  toggle_led(LED2);
+	  if (mainFlags & F_CAN_RX) {
+	//	  update_end_ptr();		// serial function
+	  }
+    
     
   } /* loop forever */
   /* please make sure that you never leave main */
