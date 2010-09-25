@@ -16,7 +16,8 @@
 
 #define AD_AVG		10		// collect ten samples for every item box
 
-#define PTB_AD_VAL	0b11110000
+#define PCT_AD_VAL	0b00000000
+#define PTB_AD_VAL	0b11110000		// skip over some channels that are led outputs, but still read them
 #define PTA_AD_VAL	0b11111111
 
 int ad_convt_vals[AD_LENGTH];
@@ -27,6 +28,7 @@ void init_adc()
 	ADCCFG = 0b11000110; 		// low power, short conv, external 1 MHz clock
 	APCTL1 = PTA_AD_VAL;
 	APCTL2 = PTB_AD_VAL;
+	APCTL3 = PTC_AD_VAL;
 	ADCSC1_AIEN = 1;	// interrupt enable
 	ADCSC2_ADTRG = 1; 		// conversion started by rtc
 	ADCSC1_ADCH = AD_START;

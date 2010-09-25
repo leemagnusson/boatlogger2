@@ -25,7 +25,7 @@ interrupt RTC_VEC void rtc_isr()
 {
 	static int seconds = 0;
 	toggle_led(LED1);
-	rprintf("%d\n",seconds++);
+	rprintf("time since start: %d seconds\n",seconds++);
 	
 	// clear flag
 	RTCSC_RTIF = 1;
