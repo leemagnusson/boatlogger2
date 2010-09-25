@@ -26,18 +26,18 @@ void main(void) {
   init_adc();
   init_can();
   
-  rprintf("Hello, World");
+  rprintf("123456789012345678901234567890");
 
   for(;;) {
     //__RESET_WATCHDOG();	/* feeds the dog */
-    //for(i=0;i<50000;i++);
+    for(i=0;i<50000;i++);
 
-	  while(!mainFlags);		// waiting for something to happen, will sleep here
+	//  while(!mainFlags);		// waiting for something to happen, will sleep here
 	  
 	  toggle_led(LED2);
-	  if (mainFlags & F_CAN_RX) {
+//	  if (mainFlags & F_CAN_RX) {
 	//	  update_end_ptr();		// serial function
-	  }
+//	  }
     
     
   } /* loop forever */

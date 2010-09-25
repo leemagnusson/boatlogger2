@@ -22,10 +22,10 @@ __interrupt VectorNumber_Vcanrx void receive_isr()
 	data_length = CANRDLR_DLC + 4; // 4 bytes for id field
 	for(i=0;i<data_length;i++) {
 		can_rx_data[can_rx_ptr] = CANRDSR_ARR[i];
-		can_rx_ptr = cir_inc(can_rx_ptr);
+		//can_rx_ptr = cir_inc(can_rx_ptr);
 	}
 	can_rx_data[can_rx_ptr] = data_length; // also save the data length field, debugging only really
-	can_rx_ptr = cir_inc(can_rx_ptr);
+	//can_rx_ptr = cir_inc(can_rx_ptr);
 	
 	// send message to main()
 	mainFlags |= F_CAN_RX;
@@ -33,11 +33,5 @@ __interrupt VectorNumber_Vcanrx void receive_isr()
 	// clear interrupt flag
 }
 
-byte cir_inc(byte i)
-{
-	i++;
-	if (i>CAN_RX_BUF_LEN)
-		i = 0;
-	return i;
-}
+
 

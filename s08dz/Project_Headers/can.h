@@ -13,6 +13,5 @@
 #include "derivative.h"
 
 void init_can(void);
-byte cir_inc(byte i);
 
 #endif /* CAN_H_ */
