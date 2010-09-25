@@ -16,7 +16,7 @@
 
 #define AD_AVG		10		// collect ten samples for every item box
 
-#define PCT_AD_VAL	0b00000000
+#define PTC_AD_VAL	0b00000000
 #define PTB_AD_VAL	0b11110000		// skip over some channels that are led outputs, but still read them
 #define PTA_AD_VAL	0b11111111
 
