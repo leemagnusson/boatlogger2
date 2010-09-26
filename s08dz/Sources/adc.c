@@ -35,7 +35,7 @@ void init_adc()
 	
 }
 
-interrupt 23 void adc_isr()
+interrupt VectorNumber_Vadc void adc_isr()
 {
 	static unsigned char ad_sel = AD_START;
 	static unsigned char ad_avg_count = 0;

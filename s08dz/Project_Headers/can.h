@@ -8,10 +8,9 @@
 #ifndef CAN_H_
 #define CAN_H_
 
-#define CAN_RX_BUF_LEN		10*13		// 13 byte length per packet at most
-
 #include "derivative.h"
 
 void init_can(void);
+void transmit_can(dword *, byte *, byte);
 
 #endif /* CAN_H_ */

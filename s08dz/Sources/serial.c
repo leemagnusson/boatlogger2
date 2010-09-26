@@ -29,6 +29,7 @@ void putc1(byte c)
 	puts1(&c,1);
 }
 
+// note this wouldn't work if there were nested calls (such as due to nested interrupts)
 void puts1(byte *str, int length)
 {
 	byte i;

@@ -10,8 +10,6 @@
 #include "derivative.h"
 #include "rprintf.h"
 
-#define RTC_VEC		25
-
 void init_rtc()
 {
 	RTCSC_RTCLKS = 0b01; 		// external clock ERCLK
@@ -21,7 +19,7 @@ void init_rtc()
 }
 
 
-interrupt RTC_VEC void rtc_isr()
+interrupt VectorNumber_Vrtc void rtc_isr()
 {
 	static int seconds = 0;
 	toggle_led(LED1);
