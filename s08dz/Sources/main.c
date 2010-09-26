@@ -9,6 +9,7 @@
 #include "adc.h"
 #include "flags.h"
 #include "can.h"
+#include "data.h"
 
 enum Flags mainFlags = 0;
 
@@ -36,10 +37,13 @@ void main(void) {
     //__RESET_WATCHDOG();	/* feeds the dog */
     for(i=0;i<50000;i++);
 
-	//  while(!mainFlags);		// waiting for something to happen, will sleep here
+	  while(!mainFlags);		// waiting for something to happen, will sleep here
 	  
 	  toggle_led(LED2);
-//	  if (mainFlags & F_CAN_RX) {
+	  if (mainFlags & F_AD_DATA) {
+		  data_process();
+		  mainFlags &= ~F_AD_DATA;
+	  }
 	//	  update_end_ptr();		// serial function
 //	  }
     

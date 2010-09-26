@@ -8,19 +8,12 @@
 #include "adc.h"
 #include "rprintf.h"
 #include "derivative.h"
+#include "flags.h"
+
+extern enum Flags mainFlags;
 
 
-#define AD_START	0
-#define AD_END		15
-#define AD_LENGTH  AD_END-AD_START+1
-
-#define AD_AVG		10		// collect ten samples for every item box
-
-#define PTC_AD_VAL	0b00000000
-#define PTB_AD_VAL	0b11110000		// skip over some channels that are led outputs, but still read them
-#define PTA_AD_VAL	0b11111111
-
-int ad_convt_vals[AD_LENGTH];
+int ad_raw_vals[AD_LENGTH];
 
 
 void init_adc()
@@ -47,15 +40,22 @@ interrupt VectorNumber_Vadc void adc_isr()
 	
 	if (++ad_avg_count >= AD_AVG) {
 		ad_avg_count = 0;
-		ad_convt_vals[ad_sel-AD_START] = ((long) 500 * (long) ad_avg_val)>>12;
+		//ad_convt_vals[ad_sel-AD_START] = ((long) 500 * (long) ad_avg_val)>>12;
+		ad_raw_vals[ad_sel-AD_START] = ad_avg_val;
 		ad_avg_val = 0;
-		
-		rprintf("ad%d: %d\n",ad_sel, ad_convt_vals[ad_sel-AD_START]);//ad_convt_vals[ad_sel]);
+
+		//adc_can_message(ad_sel, ad_convt_vals[])
+
+	//	rprintf("ad%d: %d\n",ad_sel, ad_convt_vals[ad_sel-AD_START]);//ad_convt_vals[ad_sel]);
+
 		if (++ad_sel > AD_END) {
 			ad_sel = AD_START;
 			ADCSC2_ADTRG = 1; 		// conversion started by rtc
+			mainFlags |= F_AD_DATA;
 		}
 	}
 
 	ADCSC1_ADCH = ad_sel;
 }
+
+

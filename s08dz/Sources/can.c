@@ -44,7 +44,9 @@ void transmit_can(dword *id, byte *data, byte length)
 {
 	byte i;
 	
-	CANTBSEL = CANTFLG;
+	do {
+		CANTBSEL = CANTFLG;
+	} while (CANTBSEL == 0);
 	
 	// 32 bit id register
 	//CANTIDR0 = priority << 5 | blah;
@@ -59,24 +61,20 @@ void transmit_can(dword *id, byte *data, byte length)
 	CANTFLG = CANTBSEL;
 }
 
+void transmit_iso(byte priority, byte crap)
+{
+	
+}
+
 
 __interrupt VectorNumber_Vcanrx void receive_isr()
 {
-	int data_length;
-	// send data to receive buffer, increment pointer
-	// set received flag
+	byte data_length;
 	
 	data_length = CANRDLR_DLC + 4; // 4 bytes for id field
 	
-	puts1(&CANRIDR0, data_length);		// from the id field forward through the bytes
-	putc1((byte) data_length);
-	
-	/*for(i=0;i<data_length;i++) {
-		can_rx_data[can_rx_ptr] = CANRDSR_ARR[i];
-		//can_rx_ptr = cir_inc(can_rx_ptr);
-	}*/
-	/*can_rx_data[can_rx_ptr] = data_length; // also save the data length field, debugging only really*/
-	//can_rx_ptr = cir_inc(can_rx_ptr);
+	putc1(data_length);
+	puts1(&CANRIDR0, (int) data_length);		// from the id field forward through the bytes
 	
 	// send message to main()
 	//mainFlags |= F_CAN_RX;
