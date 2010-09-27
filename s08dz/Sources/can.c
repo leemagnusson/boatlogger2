@@ -10,6 +10,8 @@
 #define LOOPBACK_MODE		1		// 1=on, 0=off
 #define LISTEN_ONLY_MODE	0		// 1=on, 0=off
 
+static byte source_address = 0;
+
 void init_can()
 {
 	// set up can for 250 kbit/s using 4 MHz external clock
@@ -40,6 +42,7 @@ void init_can()
 	CANRIER_RXFIE = 1;
 }
 
+// mostly should be just used for testing unformatted messages
 void transmit_can(dword *id, byte *data, byte length)
 {
 	byte i;
@@ -51,6 +54,7 @@ void transmit_can(dword *id, byte *data, byte length)
 	// 32 bit id register
 	//CANTIDR0 = priority << 5 | blah;
 	CANTIDR = *id;
+	CANTIDR1 |= 0x18;		// set the srr and ide bits
 	//memcpy(&CANTIDR0, data, length);
 	for (i=0;i<length;i++) {
 		CANTDSR_ARR[i] = data[i];
@@ -61,9 +65,26 @@ void transmit_can(dword *id, byte *data, byte length)
 	CANTFLG = CANTBSEL;
 }
 
-void transmit_iso(byte priority, byte crap)
+void transmit_iso(struct IsoMessage *m)
 {
+	byte i;
 	
+	do {
+		CANTBSEL = CANTFLG;
+	} while (CANTBSEL == 0);
+	
+	CANTIDR0 = m->priority<<5 | m->edp<<4 | m->dp<<3 | (m->pf)>>5;
+	CANTIDR1 = 0x18 | (m->pf<<1 & 0x6) | (m->pf<<3 & 0xE0) | m->ps>>7;
+	CANTIDR2 = m->ps<<1 | source_address>>7;
+	CANTIDR3 = source_address<<1;		// note rtr bit is always 0 (data frame)
+	
+	for (i=0;i<m->length;i++) {
+		CANTDSR_ARR[i] = m->data[i];
+	}
+	CANTDLR = m->length;
+	
+	// transmit the message
+	CANTFLG = CANTBSEL;
 }
 
 

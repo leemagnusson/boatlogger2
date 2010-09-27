@@ -23,7 +23,7 @@ interrupt VectorNumber_Vrtc void rtc_isr()
 {
 	static int seconds = 0;
 	toggle_led(LED1);
-	rprintf("time since start: %d seconds\n",seconds++);
+//	rprintf("time since start: %d seconds\n",seconds++);
 	
 	// clear flag
 	RTCSC_RTIF = 1;

@@ -90,10 +90,12 @@
 <stringAttribute key="com.freescale.cdt.debug.cw.core.settings.GdiConnection.Generic.ConfigFile" value=""/>
 <stringAttribute key="com.freescale.cdt.debug.cw.core.settings.GdiConnection.Generic.Library" value=""/>
 <listAttribute key="com.freescale.cdt.debug.cw.core.settings.GdiConnection.Generic.names_of_user_added_attributes"/>
+<stringAttribute key="com.freescale.cdt.debug.cw.initPath" value=""/>
 <stringAttribute key="com.freescale.cdt.debug.cw.osawareness.osContributorID" value="None"/>
 <stringAttribute key="com.freescale.cdt.debug.cw.osawareness.rtospluginname" value=""/>
 <stringAttribute key="com.freescale.cdt.debug.cw.osawareness.targetos" value="None"/>
 <stringAttribute key="com.freescale.cdt.debug.cw.processor" value="MC9S08DZ60"/>
+<booleanAttribute key="com.freescale.cdt.debug.cw.useInitFile" value="false"/>
 <listAttribute key="com.freescale.mcu.debug.connections.osbdm.hcs08.names_of_user_added_attributes"/>
 <stringAttribute key="com.freescale.mcu.debug.connections.softec.bdc08.SofTec_Microsystems_GdiHCS08_CommDlg" value="NO"/>
 <stringAttribute key="com.freescale.mcu.debug.connections.softec.bdc08.SofTec_Microsystems_GdiHCS08_Hardware" value="USBSPYDER08"/>
@@ -142,7 +144,7 @@
 <booleanAttribute key="org.eclipse.cdt.launch.ENABLE_REGISTER_BOOKKEEPING" value="false"/>
 <booleanAttribute key="org.eclipse.cdt.launch.ENABLE_RESTORE_WATCHPOINTS" value="true"/>
 <booleanAttribute key="org.eclipse.cdt.launch.ENABLE_VARIABLE_BOOKKEEPING" value="false"/>
-<stringAttribute key="org.eclipse.cdt.launch.FORMAT" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&lt;contentList/&gt;"/>
+<stringAttribute key="org.eclipse.cdt.launch.FORMAT" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&lt;contentList&gt;&lt;content id=&quot;pf-m-data_process-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;length-m-data_process-(format)&quot; val=&quot;1&quot;/&gt;&lt;/contentList&gt;"/>
 <stringAttribute key="org.eclipse.cdt.launch.GLOBAL_VARIABLES" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;globalVariableList/&gt;&#13;&#10;"/>
 <stringAttribute key="org.eclipse.cdt.launch.MEMORY_BLOCKS" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;memoryBlockExpressionList/&gt;&#13;&#10;"/>
 <stringAttribute key="org.eclipse.cdt.launch.PROGRAM_NAME" value="MC9S08DZ60/test.abs"/>

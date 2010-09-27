@@ -16,7 +16,7 @@ enum Flags mainFlags = 0;
 void main(void) {
 	unsigned int i;
 	byte id[4] = "q8z";
-	byte data[8] = "abcdefg";
+	byte data[8] = "testcan";
   EnableInterrupts;
   SOPT1_COPT = 0; // no watchdog
 
@@ -31,7 +31,7 @@ void main(void) {
   
   //rprintf("123456789012345678901234567890");
   
-  transmit_can(id, data, 8);
+ // transmit_can(id, data, 8);
 
   for(;;) {
     //__RESET_WATCHDOG();	/* feeds the dog */
