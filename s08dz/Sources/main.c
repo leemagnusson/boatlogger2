@@ -35,7 +35,7 @@ void main(void) {
 
   for(;;) {
     //__RESET_WATCHDOG();	/* feeds the dog */
-    for(i=0;i<50000;i++);
+   // for(i=0;i<50000;i++);
 
 	  while(!mainFlags);		// waiting for something to happen, will sleep here
 	  

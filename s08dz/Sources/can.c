@@ -3,6 +3,8 @@
 #include "flags.h"
 #include "serial.h"
 
+#include "rprintf.h"
+
 //byte can_rx_ptr = 0;
 //byte can_rx_data[CAN_RX_BUF_LEN];
 //extern enum Flags mainFlags;
@@ -10,7 +12,7 @@
 #define LOOPBACK_MODE		1		// 1=on, 0=off
 #define LISTEN_ONLY_MODE	0		// 1=on, 0=off
 
-static byte source_address = 0;
+static byte source_address = 0xAA;
 
 void init_can()
 {
@@ -87,15 +89,25 @@ void transmit_iso(struct IsoMessage *m)
 	CANTFLG = CANTBSEL;
 }
 
-
+#define HEX_OUT
 __interrupt VectorNumber_Vcanrx void receive_isr()
 {
 	byte data_length;
+#ifdef HEX_OUT
+	byte i;
+#endif
 	
 	data_length = CANRDLR_DLC + 4; // 4 bytes for id field
-	
+
+#ifdef HEX_OUT
+	rprintf("%02X ", data_length);
+	for(i=0;i<data_length;i++)
+		rprintf("%02X ", CANRIDR_ARR[i]);
+	rprintf("\n");
+#else
 	putc1(data_length);
 	puts1(&CANRIDR0, (int) data_length);		// from the id field forward through the bytes
+#endif
 	
 	// send message to main()
 	//mainFlags |= F_CAN_RX;
