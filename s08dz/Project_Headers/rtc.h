@@ -9,6 +9,8 @@
 #define RTC_H_
 
 void init_rtc(void);
+void start_ms_timer(unsigned int *time);
+unsigned int get_ms_timer(unsigned int time);
 
 
 

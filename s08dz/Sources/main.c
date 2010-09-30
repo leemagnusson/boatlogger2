@@ -10,6 +10,7 @@
 #include "flags.h"
 #include "can.h"
 #include "data.h"
+#include "timer.h"
 
 enum Flags mainFlags = 0;
 
@@ -23,6 +24,7 @@ void main(void) {
   init_mcg();
   pee(); 		// note doesn't seem to work right in debug mode
   //pbe();
+  init_timers();
   init_serial();
   init_leds();
   init_rtc();

@@ -10,8 +10,12 @@
 
 #include "derivative.h"
 
-#define BATTERY_STATUS_PGN		127508
+#define BATTERY_STATUS_PGN			127508
 #define BATTERY_STATUS_PGN_LENGTH	8
+#define MAX_ADDRESS_TRIES			32
+
+#define ADDRESS_CLAIM_PGN			60928
+#define ADDRESS_CLAIM_PGN_LENGTH	8
 
 #define EDP(x)					0
 #define DP(x)					(x & 0x10000)>>16
@@ -50,5 +54,7 @@ union BatteryStatus {
 void init_can(void);
 void transmit_can(dword *, byte *, byte);
 void transmit_iso(struct IsoMessage *m);
+void address_claim(void);
+void address_claim_message(void);
 
 #endif /* CAN_H_ */

@@ -2,8 +2,11 @@
 #include "can.h"
 #include "flags.h"
 #include "serial.h"
-
+#include "error.h"
 #include "rprintf.h"
+#include "rtc.h"
+
+#include <stdlib.h>
 
 //byte can_rx_ptr = 0;
 //byte can_rx_data[CAN_RX_BUF_LEN];
@@ -12,7 +15,8 @@
 #define LOOPBACK_MODE		1		// 1=on, 0=off
 #define LISTEN_ONLY_MODE	0		// 1=on, 0=off
 
-static byte source_address = 0xAA;
+static byte source_address;
+static byte name[ADDRESS_CLAIM_PGN_LENGTH] = "heyfool";
 
 void init_can()
 {
@@ -42,6 +46,42 @@ void init_can()
 	
 // not initialization mode writes
 	CANRIER_RXFIE = 1;
+	
+	address_claim();
+}
+
+void address_claim()
+{
+	
+	byte i;
+	unsigned int time;
+	
+	srand(2); // ad_values
+	
+	for (i=0; i<MAX_ADDRESS_TRIES; i++) {
+		address_claim_message();
+	
+		
+		start_ms_timer(&time);
+		while (get_ms_timer(time) < 250) {
+	/*		if (address_collision)
+				continue; */
+		}
+		// success
+		return;
+	} 
+	address_claim_error();
+}
+
+void address_claim_message()
+{
+	struct IsoMessage m;
+	
+	source_address = (byte) (rand()%0x7E)+0x80;
+	m.priority = 6;
+	ISO_M(ADDRESS_CLAIM_PGN);
+	m.data = name;
+	transmit_iso(&m);
 }
 
 // mostly should be just used for testing unformatted messages
@@ -89,7 +129,7 @@ void transmit_iso(struct IsoMessage *m)
 	CANTFLG = CANTBSEL;
 }
 
-#define HEX_OUT
+//#define HEX_OUT
 __interrupt VectorNumber_Vcanrx void receive_isr()
 {
 	byte data_length;
@@ -105,6 +145,8 @@ __interrupt VectorNumber_Vcanrx void receive_isr()
 		rprintf("%02X ", CANRIDR_ARR[i]);
 	rprintf("\n");
 #else
+	putc1(0xAB);
+	putc1(0xCD);
 	putc1(data_length);
 	puts1(&CANRIDR0, (int) data_length);		// from the id field forward through the bytes
 #endif
