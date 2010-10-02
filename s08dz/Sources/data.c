@@ -104,7 +104,7 @@ void calc_currents()
 void output_power_messages()
 {
 	byte i;
-	struct IsoMessage m;
+	iso_m m;
 	union BatteryStatus bs; 
 	
 	for (i=0; i<POWER_LEN; i++) {
@@ -114,8 +114,8 @@ void output_power_messages()
 		bs.Bits.current_A_1 = *powers[i].current;
 		bs.Bits.temperature_K = 0;
 		bs.Bits.sid = 0;
-		m.data = bs.data;
-		m.priority = 6;
+		m.bits.data = bs.data;
+		m.bits.priority = 6;
 		ISO_M(BATTERY_STATUS_PGN);
 		transmit_iso(&m);
 #else

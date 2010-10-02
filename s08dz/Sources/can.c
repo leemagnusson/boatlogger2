@@ -5,6 +5,7 @@
 #include "error.h"
 #include "rprintf.h"
 #include "rtc.h"
+#include "global_defines.h"
 
 #include <stdlib.h>
 
@@ -12,8 +13,6 @@
 //byte can_rx_data[CAN_RX_BUF_LEN];
 //extern enum Flags mainFlags;
 
-#define LOOPBACK_MODE		1		// 1=on, 0=off
-#define LISTEN_ONLY_MODE	0		// 1=on, 0=off
 
 static byte source_address;
 static byte name[ADDRESS_CLAIM_PGN_LENGTH] = "heyfool";
@@ -35,11 +34,30 @@ void init_can()
 	CANBTR1_TSEG_20 = 5;
 	CANBTR1_TSEG_10 = 8;
 	
-	// 8 8bit masks
-	CANIDAC_IDAM = 0b10;
-	
+	/*// 8 8bit masks
+	CANIDAC_IDAM = 0b10;	
 	// set a mask to let in all possibilities
-	CANIDMR0 = 0xFF;
+	CANIDMR0 = 0xFF;*/
+	
+	// set the masks
+	// 4 16 bit masks
+	CANIDAC_IDAM = 0b01;
+	CANIDMR0 = HIGH_BYTE(MASK_ISO_PDU2);
+	CANIDMR1 = LOW_BYTE(MASK_ISO_PDU2);
+	CANIDMR2 = HIGH_BYTE(MASK_ISO_PDU1);
+	CANIDMR3 = LOW_BYTE(MASK_ISO_PDU1);
+	CANIDMR4 = HIGH_BYTE(MASK_NMEA_PDU2);
+	CANIDMR5 = LOW_BYTE(MASK_NMEA_PDU2);
+	CANIDMR6 = HIGH_BYTE(MASK_NMEA_PDU1);
+	CANIDMR7 = LOW_BYTE(MASK_NMEA_PDU1);
+	CANIDAR0 = HIGH_BYTE(FILT_ISO_PDU2);
+	CANIDAR1 = LOW_BYTE(FILT_ISO_PDU2);
+	CANIDAR2 = HIGH_BYTE(FILT_ISO_PDU1);
+	CANIDAR3 = LOW_BYTE(FILT_ISO_PDU1);
+	CANIDAR4 = HIGH_BYTE(FILT_NMEA_PDU2);
+	CANIDAR5 = LOW_BYTE(FILT_NMEA_PDU2);
+	CANIDAR6 = HIGH_BYTE(FILT_NMEA_PDU1);
+	CANIDAR7 = LOW_BYTE(FILT_NMEA_PDU1);
 	
 	CANCTL0_INITRQ = 0;
 	while(CANCTL1_INITAK);
@@ -47,40 +65,20 @@ void init_can()
 // not initialization mode writes
 	CANRIER_RXFIE = 1;
 	
-	address_claim();
-}
-
-void address_claim()
-{
+	srand(2);		//TODO initialize this with random ad values 
 	
-	byte i;
-	unsigned int time;
+	address_claim_message();
 	
-	srand(2); // ad_values
-	
-	for (i=0; i<MAX_ADDRESS_TRIES; i++) {
-		address_claim_message();
-	
-		
-		start_ms_timer(&time);
-		while (get_ms_timer(time) < 250) {
-	/*		if (address_collision)
-				continue; */
-		}
-		// success
-		return;
-	} 
-	address_claim_error();
 }
 
 void address_claim_message()
 {
-	struct IsoMessage m;
+	iso_m m;
 	
 	source_address = (byte) (rand()%0x7E)+0x80;
-	m.priority = 6;
+	m.bits.priority = 6;
 	ISO_M(ADDRESS_CLAIM_PGN);
-	m.data = name;
+	m.bits.data = name;
 	transmit_iso(&m);
 }
 
@@ -107,7 +105,7 @@ void transmit_can(dword *id, byte *data, byte length)
 	CANTFLG = CANTBSEL;
 }
 
-void transmit_iso(struct IsoMessage *m)
+void transmit_iso(iso_m *m)
 {
 	byte i;
 	
@@ -115,15 +113,22 @@ void transmit_iso(struct IsoMessage *m)
 		CANTBSEL = CANTFLG;
 	} while (CANTBSEL == 0);
 	
-	CANTIDR0 = m->priority<<5 | m->edp<<4 | m->dp<<3 | (m->pf)>>5;
+/*	CANTIDR0 = m->priority<<5 | m->edp<<4 | m->dp<<3 | (m->pf)>>5;
 	CANTIDR1 = 0x18 | (m->pf<<1 & 0x6) | (m->pf<<3 & 0xE0) | m->ps>>7;
 	CANTIDR2 = m->ps<<1 | source_address>>7;
-	CANTIDR3 = source_address<<1;		// note rtr bit is always 0 (data frame)
+	CANTIDR3 = source_address<<1;		// note rtr bit is always 0 (data frame)*/
 	
-	for (i=0;i<m->length;i++) {
-		CANTDSR_ARR[i] = m->data[i];
+	m->bits.sa = source_address;
+	CANTIDR = m->dw_id;
+	
+	for (i=0;i<m->bits.length;i++) {
+		CANTDSR_ARR[i] = m->bits.data[i];
 	}
-	CANTDLR = m->length;
+	CANTDLR = m->bits.length;
+	
+#if !LOOPBACK_MODE
+	print_to_serial(&CANTIDR0);
+#endif
 	
 	// transmit the message
 	CANTFLG = CANTBSEL;
@@ -132,24 +137,17 @@ void transmit_iso(struct IsoMessage *m)
 //#define HEX_OUT
 __interrupt VectorNumber_Vcanrx void receive_isr()
 {
-	byte data_length;
-#ifdef HEX_OUT
-	byte i;
+
+
+#if !LOOPBACK_MODE
+	// if address claim message and not loopback, process message
+	switch (CANIDAC_IDHIT) {
+	case ISO_PDU1_HIT: iso_pdu1_rx(); break;
+	}
 #endif
 	
-	data_length = CANRDLR_DLC + 4; // 4 bytes for id field
-
-#ifdef HEX_OUT
-	rprintf("%02X ", data_length);
-	for(i=0;i<data_length;i++)
-		rprintf("%02X ", CANRIDR_ARR[i]);
-	rprintf("\n");
-#else
-	putc1(0xAB);
-	putc1(0xCD);
-	putc1(data_length);
-	puts1(&CANRIDR0, (int) data_length);		// from the id field forward through the bytes
-#endif
+	
+	print_to_serial(&CANRIDR0);
 	
 	// send message to main()
 	//mainFlags |= F_CAN_RX;
@@ -158,5 +156,32 @@ __interrupt VectorNumber_Vcanrx void receive_isr()
 	CANRFLG_RXF = 1;
 }
 
+void print_to_serial(byte *can_buf)
+{
+	byte data_length;
+#if ASCII_OUT
+	byte i;
+#endif
+	
+	data_length = can_buf[13] + 4; // 4 bytes for id field
+	
+#if ASCII_OUT
+	rprintf("%02X ", data_length);
+	for(i=0;i<data_length;i++)
+		rprintf("%02X ", can_buf[i]);
+	rprintf("\n");
+#else
+	putc1(0xAB);
+	putc1(0xCD);
+	putc1(data_length);
+	puts1(&can_buf, (int) data_length);		// from the id field forward through the bytes
+#endif
+}
 
+void iso_pdu1_rx()
+{
+	// if address claim and this source address, then send out a new address claim
+/*	if (CANRID3 == source_address<<1)
+		if (CANRID2 == (0xFE | source_address & 0x))*/
+}
 
