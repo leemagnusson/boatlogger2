@@ -142,7 +142,7 @@ __interrupt VectorNumber_Vcanrx void receive_isr()
 #if !LOOPBACK_MODE
 	// if address claim message and not loopback, process message
 	switch (CANIDAC_IDHIT) {
-	case ISO_PDU1_HIT: iso_pdu1_rx(); break;
+	case ISO_PDU1_HIT: iso_pdu1_rx(&CANRIDR0); break;
 	}
 #endif
 	
@@ -163,7 +163,7 @@ void print_to_serial(byte *can_buf)
 	byte i;
 #endif
 	
-	data_length = can_buf[13] + 4; // 4 bytes for id field
+	data_length = (can_buf[12]&0xF) + 4; // 4 bytes for id field
 	
 #if ASCII_OUT
 	rprintf("%02X ", data_length);
@@ -178,10 +178,15 @@ void print_to_serial(byte *can_buf)
 #endif
 }
 
-void iso_pdu1_rx()
+void iso_pdu1_rx(iso_m *m_receive)
 {
+	iso_m m;
+	
 	// if address claim and this source address, then send out a new address claim
-/*	if (CANRID3 == source_address<<1)
-		if (CANRID2 == (0xFE | source_address & 0x))*/
+	if (m_receive->bits.sa == source_address) {
+		// TODO check NAME
+		if (m_receive->dw_id == m.dw_id)
+			address_claim_message();
+	}
 }
 

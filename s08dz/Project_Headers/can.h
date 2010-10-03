@@ -118,6 +118,6 @@ void transmit_iso(iso_m *m);
 void address_claim(void);
 void address_claim_message(void);
 void print_to_serial(byte *can_buf);
-void iso_pdu1_rx(void);
+void iso_pdu1_rx(iso_m *m_receive);
 
 #endif /* CAN_H_ */
