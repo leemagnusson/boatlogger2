@@ -5,7 +5,7 @@
     GUID="dd3971f9-3ab8-429d-8545-24e24f333741"
     CoreName="MCU"
     CoreID="cpuHC08"
-    DataFile="C:/Users/Lee/Documents/workspace5/test/Trace_Profile_Results/analysis_hcs08_setup_test_MC9S08DZ60_PnE USB BDM_0000.datafile"
+    DataFile="C:/Users/Lee/Documents/svn/trunk/s08dz/Trace_Profile_Results/analysis_hcs08_setup_test_MC9S08DZ60_PnE USB BDM_0000.datafile"
     UIPlugin="mcu.hcs08"
     TargetConfigPlugin="MCU_HCS08"
     TraceEnabled="0"

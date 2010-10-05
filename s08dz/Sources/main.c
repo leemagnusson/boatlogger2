@@ -22,8 +22,11 @@ void main(void) {
   SOPT1_COPT = 0; // no watchdog
 
   init_mcg();
-  pee(); 		// note doesn't seem to work right in debug mode
-  //pbe();
+#ifdef SIMULATOR		
+  pbe();
+#else
+  pee(); 		// note doesn't seem to work right in simulator mode
+#endif
   init_timers();
   init_serial();
   init_leds();

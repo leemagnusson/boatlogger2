@@ -13,7 +13,7 @@ static int buf1_end = -1;
 
 void init_serial()
 {
-	SCI1BDL = 10;	
+	SCI1BDL = 10;	// baud rate = BUSCLK/this/16 -> 112,500 
 	SCI1C2_TE = 1; // enable transmitter output
 	rprintf_devopen(putcint1);
 }

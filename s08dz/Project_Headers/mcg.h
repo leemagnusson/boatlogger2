@@ -8,7 +8,7 @@
 #define RDIV	2		// divide by 4 for PLL, 128 for FLL
 #define BDIV	1		// default value divide by 2
 #define BDIV_PLL 0		
-#define VDIV	0b1001		// multiply by 32 for PLL
+#define VDIV	0b1001		// multiply by 36 for PLL
 #define VDIV_VAL	36		
 #define RDIV_32 0b111		// use when FLL is active
 
