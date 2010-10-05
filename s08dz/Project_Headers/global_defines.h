@@ -13,7 +13,5 @@
 										// to serial port as ascii text for debugging
 #define LISTEN_ONLY_MODE	0			// CAN listen only mode
 
-#define HIGH_BYTE(x)		(x>>8)
-#define LOW_BYTE(x)			(x&0xFF)
 
 #endif /* GLOBAL_DEFINES_H_ */
