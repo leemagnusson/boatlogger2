@@ -119,5 +119,6 @@ void address_claim(void);
 void address_claim_message(void);
 void print_to_serial(byte *can_buf);
 void iso_pdu1_rx(iso_m *m_receive);
+void generate_new_source_address(void);
 
 #endif /* CAN_H_ */

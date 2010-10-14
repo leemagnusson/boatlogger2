@@ -20,6 +20,8 @@ void main(void) {
 	byte data[8] = "testcan";
   EnableInterrupts;
   SOPT1_COPT = 0; // no watchdog
+  
+  i = 280 * id[0];
 
   init_mcg();
 #ifdef SIMULATOR		
@@ -34,6 +36,8 @@ void main(void) {
   init_adc();
   init_can();
   
+ 
+  
   //rprintf("123456789012345678901234567890");
   
  // transmit_can(id, data, 8);
@@ -42,7 +46,7 @@ void main(void) {
     //__RESET_WATCHDOG();	/* feeds the dog */
    // for(i=0;i<50000;i++);
 
-	  while(!mainFlags);		// waiting for something to happen, will sleep here
+	  while(!mainFlags); // _Wait;		// waiting for something to happen, will sleep here
 	  
 	  toggle_led(LED2);
 	  if (mainFlags & F_AD_DATA) {

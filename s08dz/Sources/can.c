@@ -6,6 +6,7 @@
 #include "rprintf.h"
 #include "rtc.h"
 #include "global_defines.h"
+#include "string.h"
 
 #include <stdlib.h>
 
@@ -66,16 +67,20 @@ void init_can()
 	CANRIER_RXFIE = 1;
 	
 	srand(2);		//TODO initialize this with random ad values 
-	
+	generate_new_source_address();
 	address_claim_message();
 	
+}
+
+void generate_new_source_address()
+{
+	source_address = (byte) (rand()%0x7E)+0x80;
 }
 
 void address_claim_message()
 {
 	iso_m m;
 	
-	source_address = (byte) (rand()%0x7E)+0x80;
 	m.bits.priority = 6;
 	ISO_M(ADDRESS_CLAIM_PGN);
 	m.bits.data = name;
@@ -121,9 +126,10 @@ void transmit_iso(iso_m *m)
 	m->bits.sa = source_address;
 	CANTIDR = m->dw_id;
 	
-	for (i=0;i<m->bits.length;i++) {
+	/*for (i=0;i<m->bits.length;i++) {
 		CANTDSR_ARR[i] = m->bits.data[i];
-	}
+	} */
+	_memcpy_8bitCount(CANTDSR_ARR, m->bits.data, m->bits.length);
 	CANTDLR = m->bits.length;
 	
 #if !LOOPBACK_MODE
@@ -142,7 +148,7 @@ __interrupt VectorNumber_Vcanrx void receive_isr()
 #if !LOOPBACK_MODE
 	// if address claim message and not loopback, process message
 	switch (CANIDAC_IDHIT) {
-	case ISO_PDU1_HIT: iso_pdu1_rx(&CANRIDR0); break;
+	case ISO_PDU1_HIT: iso_pdu1_rx(&CANRIDR0); break;	//TODO fix this
 	}
 #endif
 	
@@ -161,7 +167,7 @@ void print_to_serial(byte *can_buf)
 	byte data_length;
 #if ASCII_OUT
 	byte i;
-#endif
+#endif;
 	
 	data_length = (can_buf[12]&0xF) + 4; // 4 bytes for id field
 	
@@ -181,12 +187,28 @@ void print_to_serial(byte *can_buf)
 void iso_pdu1_rx(iso_m *m_receive)
 {
 	iso_m m;
+	byte i;
 	
 	// if address claim and this source address, then send out a new address claim
 	if (m_receive->bits.sa == source_address) {
-		// TODO check NAME
-		if (m_receive->dw_id == m.dw_id)
+		// quick first check
+		m.bits.priority = 6;
+		ISO_M(ADDRESS_CLAIM_PGN);
+		
+		if (m_receive->dw_id == m.dw_id) {
+			// if my name < received name I get to keep my source address
+			for(i=0;i<ADDRESS_CLAIM_PGN_LENGTH;i++) {
+				if (name[i] < m_receive->bits.data[i])
+					break;
+				if (name[i] > m_receive->bits.data[i]) {
+					generate_new_source_address();
+					break;
+				}
+				if (i == ADDRESS_CLAIM_PGN_LENGTH-1)
+					generate_new_source_address();
+			}
 			address_claim_message();
+		}
 	}
 }
 

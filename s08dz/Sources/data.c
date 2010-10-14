@@ -15,7 +15,7 @@
 
 #define CAN_OUT
 
-extern int ad_raw_vals[AD_LENGTH];
+extern word ad_raw_vals[AD_LENGTH];
 
 #define AD_REF_SEL		15
 #define V_REF			(5*65536)//(5<<16)			// <<16 converts to Q16.16
