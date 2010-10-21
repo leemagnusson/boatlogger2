@@ -112,7 +112,7 @@ void transmit_can(dword *id, byte *data, byte length)
 
 void transmit_iso(iso_m *m)
 {
-	byte i;
+//	byte i;
 	
 	do {
 		CANTBSEL = CANTFLG;
@@ -129,15 +129,17 @@ void transmit_iso(iso_m *m)
 	/*for (i=0;i<m->bits.length;i++) {
 		CANTDSR_ARR[i] = m->bits.data[i];
 	} */
-	_memcpy_8bitCount(CANTDSR_ARR, m->bits.data, m->bits.length);
+	_memcpy_8bitCount((void *)CANTDSR_ARR, m->bits.data, m->bits.length);
 	CANTDLR = m->bits.length;
 	
 #if !LOOPBACK_MODE
 	print_to_serial(&CANTIDR0);
 #endif
 	
+#if !LISTEN_ONLY_MODE
 	// transmit the message
 	CANTFLG = CANTBSEL;
+#endif
 }
 
 //#define HEX_OUT

@@ -18,11 +18,11 @@
 
 #define PTC_AD_VAL	0b00000000
 #define PTB_AD_VAL	0b11110000		// skip over some channels that are led outputs, but still read them
-#define PTA_AD_VAL	0b00000000
+#define PTA_AD_VAL	0b00000011
 
 #define AD_COLLECT_MASK	 ((dword) (((dword)0b00001100<<24) | ((dword)PTC_AD_VAL<<16) | ((dword)PTB_AD_VAL<<8) | (dword)PTA_AD_VAL))
 
-#define AD_BEGIN	12
+#define AD_BEGIN	0
 
 void init_adc(void);
 byte next_ad_sel(byte ad_sel);
