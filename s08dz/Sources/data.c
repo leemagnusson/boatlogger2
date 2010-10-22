@@ -18,9 +18,9 @@
 extern word ad_raw_vals[AD_LENGTH];
 
 #define AD_REF_SEL		15
-#define V_REF			((long) 5*65536)//(5<<16)			// <<16 converts to Q16.16
-#define V_REF_CV		(V_REF*100)		// convert counts to centivolts, format for conversions will be Q16.16
-#define V_REF_DA		(V_REF/100*10000)		// counts to deciamps, 100 mV/A
+#define V_REF			5.0//(5<<16)			// <<16 converts to Q16.16
+#define V_REF_CV		FLOAT_TO_FIXED16_16(4*V_REF*100)		// convert counts to centivolts, format for conversions will be Q16.16, 4x factor due to voltage divider
+#define V_REF_DA		FLOAT_TO_FIXED16_16(V_REF/100*10000)		// counts to deciamps, 100 mV/A
 #define CONV_LEN		2
 
 #define CONV_CV_IND		0
@@ -100,11 +100,15 @@ void calc_currents()
 {
 	byte i;
 	long l1, l2, l3;
+	FIXED16_16 fp;
 	for (i=0;i<V_MEAS_LEN;i++) {
 		l1 = (long) ((int) ad_raw_vals[C_meas[i].ad_sel] - C_meas[i].offset);
 		l2 = l1 * *(C_meas[i].conv)+0x8000;
-		l3 = HIGH_WORD(l2);
-		currents[i] = (int)(((long) ((int) ad_raw_vals[C_meas[i].ad_sel] - C_meas[i].offset) * *(C_meas[i].conv))/((long)0x10000));
+		//l3 = HIGH_WORD(l2);
+		fp.l = (long) ((int) (ad_raw_vals[C_meas[i].ad_sel] - C_meas[i].offset));
+		fp.l *= *C_meas[i].conv;
+		currents[i] = ROUND_FIXED16_16(fp);
+		//currents[i] = (int)(((long) ((int) ad_raw_vals[C_meas[i].ad_sel] - C_meas[i].offset) * *(C_meas[i].conv))/((long)0x10000));
 		//currents[i] = l3;//HIGH_WORD((long) ((int) ad_raw_vals[C_meas[i].ad_sel] - C_meas[i].offset) * *(C_meas[i].conv));
 	}
 }

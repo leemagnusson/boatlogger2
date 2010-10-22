@@ -3,12 +3,24 @@
  *       changed and should not be edited by hand
  */
 
+
+#ifndef DERIVATIVE_H
+#define DERIVATIVE_H
+
 /* Include the derivative-specific header file */
 #include <mc9s08dz60.h>
 
 #define HIGH_BYTE(x)		(x>>8)
 #define LOW_BYTE(x)			(x&0xFF)
-#define HIGH_WORD(x)		*(&((word) x)+1)
+typedef union fp {
+	long l;
+	struct parts {
+		int h;
+		int l;
+	} i;
+} FIXED16_16;
+#define ROUND_FIXED16_16(x)		(x.l+=(long)0x8000, x.i.h)
+#define FLOAT_TO_FIXED16_16(x) 	(long) (x*0x10000)
 
 #define _Stop asm ( stop; )
   /*!< Macro to enter stop modes, STOPE bit in SOPT1 register must be set prior to executing this macro */
@@ -16,4 +28,5 @@
 #define _Wait asm ( wait; )
   /*!< Macro to enter wait mode */
 
+#endif
 
