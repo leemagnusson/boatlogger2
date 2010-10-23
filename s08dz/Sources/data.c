@@ -7,69 +7,44 @@
 
 // This file will process the data logging, stored in global variables throughout the program
 
-#include "derivative.h"
+
 #include "data.h"
 #include "adc.h"
 #include "can.h"
 #include "rprintf.h"
 
-#define CAN_OUT
 
 extern word ad_raw_vals[AD_LENGTH];
 
-#define AD_REF_SEL		15
-#define V_REF			5.0//(5<<16)			// <<16 converts to Q16.16
-#define V_REF_CV		FLOAT_TO_FIXED16_16(4*V_REF*100)		// convert counts to centivolts, format for conversions will be Q16.16, 4x factor due to voltage divider
-#define V_REF_DA		FLOAT_TO_FIXED16_16(V_REF/100*10000)		// counts to deciamps, 100 mV/A
-#define CONV_LEN		2
-
-#define CONV_CV_IND		0
-#define CONV_DA_IND		1
-
-static long conv[CONV_LEN] = {0,0};
-static const long conv_ref[CONV_LEN] = {V_REF_CV, V_REF_DA};
-
-struct voltage_meas {
-	byte ad_sel;
-	long* conv;
-};
 
 // matrix of ad_sel values and associated conversions for voltage
-#define V_MEAS_LEN		3
-static const struct voltage_meas V_meas[V_MEAS_LEN] = {
+static const struct voltage_meas V_meas[] = {
 		{0, &conv[CONV_CV_IND]}, 
 		{12, &conv[CONV_CV_IND]},
 		{1, &conv[CONV_CV_IND]}
 	};
+#define V_MEAS_LEN		sizeof V_meas / sizeof V_meas[0]
 static int voltages[V_MEAS_LEN];
 
-struct current_meas {
-	byte ad_sel;
-	long* conv;
-	int offset;
-};
-#define DEFAULT_C_OFFSET	4096/2*8
+
 // matrix of ad_sel values and associated conversions for current
-#define C_MEAS_LEN		3
-static const struct current_meas C_meas[C_MEAS_LEN] = {
+#define DEFAULT_C_OFFSET	4096/2*8
+static const struct current_meas C_meas[] = {
 		{2, &conv[CONV_DA_IND], DEFAULT_C_OFFSET}, 
 		{13, &conv[CONV_DA_IND], DEFAULT_C_OFFSET},
 		{0, &conv[CONV_DA_IND], DEFAULT_C_OFFSET}
 	};
+#define C_MEAS_LEN		sizeof C_meas / sizeof C_meas[0]
 static int currents[C_MEAS_LEN];
 
-struct power_st {
-	int* voltage;
-	int* current;
-};
 
 // linking matrix of current associated with voltage
-
 static const struct power_st powers[] = {
 		{&voltages[1], &currents[1]},
 		{&voltages[2], &currents[2]}	// EVB pins 10 and 12
 };
-#define POWER_LEN		2 //sizeof()
+#define POWER_LEN		sizeof powers / sizeof powers[0]
+
 
 void data_process()
 {

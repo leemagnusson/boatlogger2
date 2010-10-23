@@ -12,6 +12,6 @@
 #define ASCII_OUT			1			// this prints binary CAN data written 
 										// to serial port as ascii text for debugging
 #define LISTEN_ONLY_MODE	0			// CAN listen only mode
-
+#define CAN_OUT
 
 #endif /* GLOBAL_DEFINES_H_ */
