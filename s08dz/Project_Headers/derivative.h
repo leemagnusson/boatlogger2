@@ -13,6 +13,8 @@
 
 #define HIGH_BYTE(x)		(x>>8)
 #define LOW_BYTE(x)			(x&0xFF)
+#define BYTE_SWAP(x)		(((x&0xFF)<<8) |(x&0xFF00)>>8)
+
 typedef union fp {
 	long l;
 	struct parts {

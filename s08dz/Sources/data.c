@@ -97,9 +97,9 @@ void output_power_messages()
 	for (i=0; i<POWER_LEN; i++) {
 #ifdef CAN_OUT
 		bs.Bits.battery_instance = i+1;
-		bs.Bits.voltage_V_01 = *powers[i].voltage;
-		bs.Bits.current_A_1 = *powers[i].current;
-		bs.Bits.temperature_K = 0;
+		bs.Bits.voltage_V_01 = BYTE_SWAP(*powers[i].voltage);
+		bs.Bits.current_A_1 = BYTE_SWAP(*powers[i].current);
+		bs.Bits.temperature_K = 0xFFFF;
 		bs.Bits.sid = 0;
 		m.bits.data = bs.data;
 		m.bits.priority = 6;
