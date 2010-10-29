@@ -15,4 +15,4 @@ class driver(serial_sentence_io):
 		if sentence:
 			# FIXME: make any necessary adjustments to the
 			# sentence before publishing it
-			self.publisher.publish_sentence(sentence)
+			self.publisher.publish_sentence(self.name, sentence)

@@ -28,10 +28,16 @@ class mcu:
 		def __init(self, object_path):
 			dbus.service.Object.__init__(self, dbus.SystemBus(), object_path)
 
-		@dbus.service.signal(dbus_interface='org.boatlogger.MCU', signature='s')
-		def publish_sentence(self, data):
-			# FIXME: implement this
-			print 'publishing: '+repr(data)
+		# note that although the object_path encodes the real
+		# device generating the data, it can occasionally be
+		# useful to let the driver specify the "real"
+		# originating device.  for example, the playback
+		# driver sends along the original generator of a
+		# sentence when it plays back log data.  that is why
+		# we have a device argument to this method.
+		@dbus.service.signal(dbus_interface='org.boatlogger.MCU', signature='ss')
+		def publish_sentence(self, device, data):
+			print 'publishing: '+repr(data)+' from '+device
 #			pass
 
 
