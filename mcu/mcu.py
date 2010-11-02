@@ -25,8 +25,8 @@ class mcu:
 	devices = None
 
 	class dbus_signaller(dbus.service.Object):
-		def __init(self, object_path):
-			dbus.service.Object.__init__(self, dbus.SystemBus(), object_path)
+		def __init(self, conn, object_path):
+			dbus.service.Object.__init__(self, conn, object_path)
 
 		# note that although the object_path encodes the real
 		# device generating the data, it can occasionally be
@@ -35,10 +35,9 @@ class mcu:
 		# driver sends along the original generator of a
 		# sentence when it plays back log data.  that is why
 		# we have a device argument to this method.
-		@dbus.service.signal(dbus_interface='org.boatlogger.MCU', signature='ss')
+		@dbus.service.signal('org.boatlogger.MCU', signature='ss')
 		def publish_sentence(self, device, data):
 			print 'publishing: '+repr(data)+' from '+device
-			sys.stdout.flush()
 #			pass
 
 
@@ -54,7 +53,7 @@ class mcu:
 			self.name = name
 			self.config = config
 			self.module = __import__(config['driver'])
-			self.publisher = mcu.dbus_signaller('/'+name)
+			self.publisher = mcu.dbus_signaller(mcu.dbus, '/org/boatlogger/devices/'+name)
 			self.driver = self.module.driver(name, config, self.publisher)
 			self.make_io_handlers(mcu)
 
@@ -80,6 +79,7 @@ class mcu:
 
 		self.app = QCoreApplication(sys.argv)
 		dbus.mainloop.qt.DBusQtMainLoop(set_as_default=True)
+		self.dbus = dbus.SystemBus()
 
 		# load config file
 		print('loading '+config)
