@@ -1,4 +1,6 @@
 import os
+import fcntl
+import errno
 
 class driver:
     '''This is a driver for reading in previously logged data over a named
@@ -22,11 +24,16 @@ class driver:
         if self.opt.has_key('fifo_name'):
 	    self.fifo_name = self.opt['fifo_name']
 
-        # open the FIFO for reading
+        # open the FIFO for reading, with no buffering so we can push
+        # events to the bus as soon as we get them
         if not os.path.exists(self.fifo_name):
             os.mkfifo(self.fifo_name)
+        self.fifo = open(self.fifo_name, 'r+', 0)
 
-        self.fifo = open(self.fifo_name, 'r')
+        # set nonblocking
+        fd = self.fifo.fileno()
+        fl = fcntl.fcntl(fd, fcntl.F_GETFL)
+        fcntl.fcntl(fd, fcntl.F_SETFL, fl | os.O_NONBLOCK)
 
 
     def send(self, data):
@@ -40,7 +47,11 @@ class driver:
         the log and publishes it.'''
 
         while True:
-            data = self.fifo.read(self.read_sz)
+            try:
+                data = self.fifo.read(self.read_sz)
+            except IOError as E:
+                break
+                
             if not data:
                 break
 
@@ -57,6 +68,9 @@ class driver:
                     self.publisher.publish_sentence(source, data)
                 else:
                     break
+
+            if len(data) < self.read_sz:
+                break
 
 
     def write(self, fd):
