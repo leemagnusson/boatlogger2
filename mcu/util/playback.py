@@ -26,12 +26,6 @@ if len(args) != 1:
 
 # open the log file
 log = open(args[0], 'r')
-header = log.readline()
-
-# check that this is the right kind of file!
-if header[0] != '#' or 'boatlogger' not in header:
-    print args[0]+' is not a boatlogger log!'
-    sys.exit(1)
 
 # open the MCU playback driver's FIFO
 try:
@@ -43,6 +37,7 @@ except:
 
 
 last_time = None
+lineno = 0
 
 # send the log data to the FIFO
 while True:
@@ -50,7 +45,13 @@ while True:
     if not data:
         break
 
+    ++lineno
+
     timestamp, source, sentence = data.split(',', 2)
+
+    if not timestamp or not source or not sentence:
+        print args[0]+' is not a boatlogger log (line '+lineno+')'
+        sys.exit(1)
 
     # filter out sources we aren't interested in
     if opts.sources != None and len(opts.sources) > 0:
@@ -60,9 +61,10 @@ while True:
     # note that this assumes log entries are in order
     if opts.realtime:
         if last_time is None:
-            last_time = timestamp
+            last_time = float(timestamp)
         else:
-            time.sleep(timestamp - last_time)
-            last_time = timestamp
+            time.sleep(float(timestamp) - last_time)
+            last_time = float(timestamp)
 
+    print 'sending '+repr(data)+' to fifo'
     os.write(fifo, data)

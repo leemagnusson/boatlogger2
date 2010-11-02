@@ -45,14 +45,18 @@ class driver:
                 break
 
             self.read_buf += data
-            endl = self.read_buf.find('\n')
-            if endl >= 0:
-                # extract the sentence and drop trailing whitespace
-                # (spaces/tabs, \r, \n), then split out logging
-                # metadata
-                S, self.read_buf = self.read_buf[:endl+1], self.read_buf[endl+1:]
-                timestamp, source, data = S.rstrip().split(',', 2)
-                self.publisher.publish_sentence(source, data)
+
+            while True:
+                endl = self.read_buf.find('\n')
+                if endl >= 0:
+                    # extract the sentence and drop trailing
+                    # whitespace (spaces/tabs, \r, \n), then split out
+                    # logging metadata
+                    S, self.read_buf = self.read_buf[:endl+1], self.read_buf[endl+1:]
+                    timestamp, source, data = S.rstrip().split(',', 2)
+                    self.publisher.publish_sentence(source, data)
+                else:
+                    break
 
 
     def write(self, fd):

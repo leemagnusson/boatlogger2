@@ -11,8 +11,8 @@ class driver(serial_sentence_io):
 		serial_sentence_io.send(data)
 
 	def read(self, fd):
-		sentence = serial_sentence_io.read(self, fd)
-		if sentence:
+		sentences = serial_sentence_io.read(self, fd)
+		if sentences:
 			# FIXME: make any necessary adjustments to the
 			# sentence before publishing it
-			self.publisher.publish_sentence(self.name, sentence)
+			self.publisher.publish_sentence(self.name, S) for S in sentences

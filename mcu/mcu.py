@@ -38,6 +38,7 @@ class mcu:
 		@dbus.service.signal(dbus_interface='org.boatlogger.MCU', signature='ss')
 		def publish_sentence(self, device, data):
 			print 'publishing: '+repr(data)+' from '+device
+			sys.stdout.flush()
 #			pass
 
 

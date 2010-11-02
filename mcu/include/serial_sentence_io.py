@@ -55,20 +55,26 @@ class serial_sentence_io:
         driver classes are responsible for munging it into something
         useful and then sending it to the MCU for publishing.'''
 
+        sentences = []
+
         while True:
             data = self.ser.read(self.read_sz)
             if not data:
                 break
 
             self.read_buf += data
-            endl = self.read_buf.find('\n')
-            if endl >= 0:
-                # extract the sentence and drop trailing whitespace
-                # (spaces/tabs, \r, \n)
-                S, self.read_buf = self.read_buf[:endl+1], self.read_buf[endl+1:]
-                return S.rstrip()
 
-        return None
+            while True:
+                endl = self.read_buf.find('\n')
+                if endl >= 0:
+                    # extract the sentence and drop trailing
+                    # whitespace (spaces/tabs, \r, \n)
+                    S, self.read_buf = self.read_buf[:endl+1], self.read_buf[endl+1:]
+                    sentences.append(S.rstrip())
+                else:
+                    break
+
+        return sentences if sentences else None
 
 
     def write(self, fd):
