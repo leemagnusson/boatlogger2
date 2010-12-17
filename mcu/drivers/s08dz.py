@@ -1,4 +1,5 @@
 from serial_sentence_io import serial_sentence_io
+import nmea2k
 
 class driver(serial_sentence_io):
 
