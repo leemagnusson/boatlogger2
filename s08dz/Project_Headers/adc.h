@@ -16,9 +16,9 @@
 
 #define AD_AVG		8		// collect eight samples for every item box
 
-#define PTC_AD_VAL	0b00000000
-#define PTB_AD_VAL	0b11110000		// skip over some channels that are led outputs, but still read them
-#define PTA_AD_VAL	0b00000011
+#define PTC_AD_VAL	0b11111111
+#define PTB_AD_VAL	0b11111111		// skip over some channels that are led outputs, but still read them
+#define PTA_AD_VAL	0b11111111
 
 #define AD_COLLECT_MASK	 ((dword) (((dword)0b00001100<<24) | ((dword)PTC_AD_VAL<<16) | ((dword)PTB_AD_VAL<<8) | (dword)PTA_AD_VAL))
 

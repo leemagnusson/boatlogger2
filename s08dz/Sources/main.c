@@ -15,6 +15,7 @@
 #include "can.h"
 #include "data.h"
 #include "timer.h"
+#include "io.h"
 
 enum Flags mainFlags = 0;
 
@@ -33,12 +34,14 @@ void main(void) {
 #else
   pee(); 		// note doesn't seem to work right in simulator mode
 #endif
+  init_io();
   init_timers();
   init_serial();
   init_leds();
   init_rtc();
   init_adc();
   init_can();
+
   
  
   

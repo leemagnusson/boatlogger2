@@ -11,10 +11,10 @@
 #include "derivative.h"
 
 // voltage reference defines with conversions
-#define AD_REF_SEL		15
-#define V_REF			5.0//(5<<16)			// <<16 converts to Q16.16
+#define AD_REF_SEL		23
+#define V_REF			3.0//(5<<16)			// <<16 converts to Q16.16
 #define V_REF_CV		FLOAT_TO_FIXED16_16(4*V_REF*100)		// convert counts to centivolts, format for conversions will be Q16.16, 4x factor due to voltage divider
-#define V_REF_DA		FLOAT_TO_FIXED16_16(V_REF/100*10000)		// counts to deciamps, 100 mV/A
+#define V_REF_DA		FLOAT_TO_FIXED16_16(V_REF/100*10000*10)		// counts to deciamps, 100 mV/A -> now to centiamps with extra *10
 #define CONV_LEN		2
 
 #define CONV_CV_IND		0

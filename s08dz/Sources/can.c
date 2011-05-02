@@ -10,6 +10,9 @@
 
 #include <stdlib.h>
 
+extern byte loopback_mode;
+extern byte ascii_out;
+
 //byte can_rx_ptr = 0;
 //byte can_rx_data[CAN_RX_BUF_LEN];
 //extern enum Flags mainFlags;
@@ -27,7 +30,7 @@ void init_can()
 	while(!CANCTL1_INITAK);
 	
 // can initialization mode writes
-	CANCTL1_LOOPB = LOOPBACK_MODE;
+	CANCTL1_LOOPB = loopback_mode;
 	CANCTL1_LISTEN = LISTEN_ONLY_MODE;
 	
 	CANBTR0_SJW = 0b01;
@@ -132,9 +135,9 @@ void transmit_iso(iso_m *m)
 	_memcpy_8bitCount((void *)CANTDSR_ARR, m->bits.data, m->bits.length);
 	CANTDLR = m->bits.length;
 	
-#if !LOOPBACK_MODE
-	print_to_serial(&CANTIDR0);
-#endif
+	if (!loopback_mode)
+		print_to_serial(&CANTIDR0);
+
 	
 #if !LISTEN_ONLY_MODE
 	// transmit the message
@@ -146,13 +149,12 @@ void transmit_iso(iso_m *m)
 __interrupt VectorNumber_Vcanrx void receive_isr()
 {
 
-
-#if !LOOPBACK_MODE
-	// if address claim message and not loopback, process message
-	switch (CANIDAC_IDHIT) {
-	case ISO_PDU1_HIT: iso_pdu1_rx(&CANRIDR0); break;	//TODO fix this
+	if (!loopback_mode) {
+		// if address claim message and not loopback, process message
+		switch (CANIDAC_IDHIT) {
+		case ISO_PDU1_HIT: iso_pdu1_rx(&CANRIDR0); break;	//TODO fix this
+		}
 	}
-#endif
 	
 	
 	print_to_serial(&CANRIDR0);
@@ -167,23 +169,24 @@ __interrupt VectorNumber_Vcanrx void receive_isr()
 void print_to_serial(byte *can_buf)
 {
 	byte data_length;
-#if ASCII_OUT
 	byte i;
-#endif;
+
 	
 	data_length = (can_buf[12]&0xF) + 4; // 4 bytes for id field
 	
-#if ASCII_OUT
-	rprintf("%02X ", data_length);
-	for(i=0;i<data_length;i++)
-		rprintf("%02X ", can_buf[i]);
-	rprintf("\n");
-#else
-	putc1(0xAB);
-	putc1(0xCD);
-	putc1(data_length);
-	puts1(&can_buf, (int) data_length);		// from the id field forward through the bytes
-#endif
+/*	if (ascii_out) {
+		rprintf("%02X", data_length);
+		for(i=0;i<data_length;i++)
+			rprintf("%02X", can_buf[i]);
+		rprintf("\n");
+	} else {*/
+//		putc1(0xAB);
+//		putc1(0xCD);
+		putc1(data_length);
+		puts1(can_buf, (int) data_length,0);		// from the id field forward through the bytes
+		putcontrol1(NEWLINE_AND_LINEFEED);
+//	}
+
 }
 
 void iso_pdu1_rx(iso_m *m_receive)
