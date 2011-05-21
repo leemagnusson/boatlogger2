@@ -7,11 +7,12 @@
 #include "rtc.h"
 #include "global_defines.h"
 #include "string.h"
-
+#include "led.h"
 #include <stdlib.h>
 
 extern byte loopback_mode;
 extern byte ascii_out;
+
 
 //byte can_rx_ptr = 0;
 //byte can_rx_data[CAN_RX_BUF_LEN];
@@ -19,7 +20,7 @@ extern byte ascii_out;
 
 
 static byte source_address;
-static byte name[ADDRESS_CLAIM_PGN_LENGTH] = "heyfool";
+static byte name[ADDRESS_CLAIM_PGN_LENGTH] = {'a','b','c','d',0,170,160,0xC0};
 
 void init_can()
 {
@@ -90,6 +91,7 @@ void address_claim_message()
 	transmit_iso(&m);
 }
 
+/*
 // mostly should be just used for testing unformatted messages
 void transmit_can(dword *id, byte *data, byte length)
 {
@@ -111,7 +113,7 @@ void transmit_can(dword *id, byte *data, byte length)
 	
 	// transmit the message
 	CANTFLG = CANTBSEL;
-}
+} */
 
 void transmit_iso(iso_m *m)
 {
@@ -193,6 +195,38 @@ void iso_pdu1_rx(iso_m *m_receive)
 {
 	iso_m m;
 	byte i;
+	byte da;
+	pgn request_pgn;
+	
+	if (m_receive->bits.pf1 == PF1(ISO_REQUEST_PGN) && 
+			m_receive->bits.pf2 == PF2(ISO_REQUEST_PGN)) {
+		da = m_receive->bits.ps1<<7 | m_receive->bits.ps2;
+		if (da == 255 || da == source_address){
+			
+			// something has been requested of us
+			//m_receive->bits.data = &m_receive+4;
+			request_pgn.byte_pgn[0] = 0;
+			request_pgn.byte_pgn[1] = *((byte *) m_receive+6);
+			request_pgn.byte_pgn[2] = *((byte *) m_receive+5);
+			request_pgn.byte_pgn[3] = *((byte *) m_receive+4);
+			
+			//request_pgn = (byte *) m_receive+1;
+			putc1(0xab);
+			putc1(0xab);
+			//puts1(m_receive, 7,0);
+			//puts1((byte *) m_receive+1,6,0);
+			puts1(request_pgn.byte_pgn, 4,0);
+			switch (request_pgn.dw_pgn) {
+			case ((dword) ADDRESS_CLAIM_PGN):
+				toggle_led(LED2);
+				address_claim_message();
+				break;
+			case ((dword) PRODUCT_INFORMATION_PGN):
+				toggle_led(LED1); 
+				break;
+			}
+		}
+	}
 	
 	// if address claim and this source address, then send out a new address claim
 	if (m_receive->bits.sa == source_address) {

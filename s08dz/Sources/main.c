@@ -18,6 +18,7 @@
 #include "io.h"
 
 enum Flags mainFlags = 0;
+extern byte take_measurements;
 
 void main(void) {
 	unsigned int i;
@@ -26,7 +27,7 @@ void main(void) {
   EnableInterrupts;
   SOPT1_COPT = 0; // no watchdog
   
-  i = 280 * id[0];
+  i = 280 * id[0]; 
 
   init_mcg();
 #ifdef SIMULATOR		
@@ -34,11 +35,13 @@ void main(void) {
 #else
   pee(); 		// note doesn't seem to work right in simulator mode
 #endif
+  init_leds();
   init_io();
   init_timers();
   init_serial();
-  init_leds();
   init_rtc();
+  puts1("\x01\x23\x45\x67\x89\xab\xcd\xef",8,0);	
+  putcontrol1(NEWLINE_AND_LINEFEED);
   init_adc();
   init_can();
 
@@ -55,9 +58,10 @@ void main(void) {
 
 	  while(!mainFlags); // _Wait;		// waiting for something to happen, will sleep here
 	  
-	  toggle_led(LED2);
+	  //toggle_led(LED2);
 	  if (mainFlags & F_AD_DATA) {
-		  data_process();
+		  if(take_measurements)
+			  data_process();
 		  mainFlags &= ~F_AD_DATA;
 	  }
 	//	  update_end_ptr();		// serial function

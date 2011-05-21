@@ -8,6 +8,7 @@
 #include "adc.h"
 #include "rprintf.h"
 #include "flags.h"
+#include "rtc.h"
 
 extern enum Flags mainFlags;
 
@@ -21,10 +22,17 @@ void init_adc()
 	APCTL1 = PTA_AD_VAL;
 	APCTL2 = PTB_AD_VAL;
 	APCTL3 = PTC_AD_VAL;
+	ADCSC1_ADCH = 0b11111; //AD_BEGIN;
 	ADCSC1_AIEN = 1;	// interrupt enable
-	ADCSC2_ADTRG = 1; 		// conversion started by rtc
-	ADCSC1_ADCH = AD_BEGIN;
+//ADCSC2_ADTRG = 1; 		// conversion started by hardware -> rtc
+	register_rtc_callback(start_adc);
 	
+	
+}
+
+void start_adc()
+{
+	ADCSC1_ADCH = AD_BEGIN;
 }
 
 interrupt VectorNumber_Vadc void adc_isr()
@@ -33,10 +41,9 @@ interrupt VectorNumber_Vadc void adc_isr()
 	static unsigned char ad_avg_count = 0;
 	static unsigned int ad_avg_val = 0;
 	
-	ADCSC2_ADTRG = 0;			// software trigger now
-	
+	//ADCSC2_ADTRG = 0;			// software trigger now
+	ad_sel = ADCSC1_ADCH;
 	ad_avg_val += ADCR;
-	
 	if (++ad_avg_count >= AD_AVG) {
 		ad_avg_count = 0;
 		//ad_convt_vals[ad_sel-AD_START] = ((long) 500 * (long) ad_avg_val)>>12;
@@ -48,9 +55,9 @@ interrupt VectorNumber_Vadc void adc_isr()
 	//	rprintf("ad%d: %d\n",ad_sel, ad_convt_vals[ad_sel-AD_START]);//ad_convt_vals[ad_sel]);
 
 		ad_sel = next_ad_sel(ad_sel);
-		if (ad_sel > AD_END) {
-			ad_sel = AD_BEGIN;
-			ADCSC2_ADTRG = 1; 		// conversion started by rtc
+		if (ad_sel >= AD_END) {
+			ad_sel = 0b11111;		// end the conversions
+			//ADCSC2_ADTRG = 1; 		// conversion started by rtc
 			mainFlags |= F_AD_DATA;
 		}
 		

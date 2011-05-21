@@ -129,13 +129,13 @@ void output_power_messages()
 	iso_m m;
 	union BatteryStatus bs; 
 	
-	for (i=0; i<POWER_LEN; i++) {
+	for (i=0; i<3; i++) { //i<POWER_LEN; i++) {
 #ifdef CAN_OUT
 		bs.Bits.battery_instance = i+1;
 		bs.Bits.voltage_V_01 = BYTE_SWAP(*powers[i].voltage);
 		bs.Bits.current_A_1 = BYTE_SWAP(*powers[i].current);
 		bs.Bits.temperature_K = 0xFFFF;
-		bs.Bits.sid = 0;
+		bs.Bits.sid = 0xFF;
 		m.bits.data = bs.data;
 		m.bits.priority = 6;
 		ISO_M(BATTERY_STATUS_PGN);

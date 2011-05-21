@@ -11,6 +11,8 @@
 #include "rprintf.h"
 
 static unsigned int seconds = 0;
+static void (*rtc_callbacks[1]) (void); // just one function for now
+static byte rtc_callback_length = 0;
 
 void init_rtc()
 {
@@ -32,13 +34,20 @@ unsigned int get_ms_timer(unsigned int time)
 	return (seconds*1000 + RTCCNT - time); // does this work up to 65535 ms?
 }
 
+void register_rtc_callback(void (*fun) (void))
+{
+	rtc_callbacks[rtc_callback_length++] = fun;
+}
 
 interrupt VectorNumber_Vrtc void rtc_isr()
 {
-	toggle_led(LED1);
+	byte i;
+//	toggle_led(LED1);
 	seconds++;
 //	rprintf("time since start: %d seconds\n",seconds++);
 	
 	// clear flag
+	for (i=0;i<rtc_callback_length;i++)
+		rtc_callbacks[i]();
 	RTCSC_RTIF = 1;
 }

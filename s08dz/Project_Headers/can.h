@@ -17,6 +17,12 @@
 #define ADDRESS_CLAIM_PGN			60928
 #define ADDRESS_CLAIM_PGN_LENGTH	8
 
+#define PRODUCT_INFORMATION_PGN		126996
+
+#define DC_DETAILED_STATUS_PGN		127506
+
+#define ISO_REQUEST_PGN				59904
+
 #define EDP(x)					0
 #define DP(x)					((x & 0x10000)>>16)
 #define ispdu1(x)				((x & 0xF000) < 0xF000)				// pdu1 is address based
@@ -76,10 +82,16 @@ typedef union {
 		
 		
 	//	word pgn;
+	//byte data[8];
 		byte *data;
 		byte length;
 	} bits ;
 } iso_m;
+
+typedef union {
+	dword dw_pgn;
+	byte byte_pgn[4];
+} pgn;
 
 union BatteryStatus {
 	byte data[8];

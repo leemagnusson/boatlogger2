@@ -11,7 +11,7 @@
 void init_rtc(void);
 void start_ms_timer(unsigned int *time);
 unsigned int get_ms_timer(unsigned int time);
-
+void register_rtc_callback(void (*fun) (void));
 
 
 #endif /* RTC_H_ */
