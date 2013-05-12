@@ -12,7 +12,7 @@ fileout = "data.csv"
 parser = Parser('lessgps/data/nmea.yaml')
 
 sentence_filter = ['VHW','MWV']
-out_format = [[['DegreesTrue','Value'],['DegreesTrue','Ref'],['SOW','Value'],['SOW','Ref']],[['WindAngle','Value'],['WindAngle','Ref'],['WindSpeed','Value'],['WindSpeed','Unit']]]
+out_format = [[['Talker'],['DegreesTrue','Value'],['DegreesTrue','Ref'],['SOW','Value'],['SOW','Ref']],[['Talker'],['WindAngle','Value'],['WindAngle','Ref'],['WindSpeed','Value'],['WindSpeed','Unit']]]
 
 def format_out(d,form):
     l = []
