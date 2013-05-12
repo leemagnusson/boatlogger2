@@ -38,12 +38,13 @@ class grammar_factory(dict):
         self.mt = oneOf('M T')          # Variation: Magnetic, True
         self.mto = Optional(self.mt)
 
-        self.gpsstat = oneOf('A V')     # A=Active, V=Void
+        self.stat = oneOf('A V')     # A=Active, V=Void
         self.fixmode = oneOf('M A')     # M=Manual, A=Auto
         self.fixtype = oneOf('1 2 3')   # 1=NA, 2=2D Fix (<4 SV's used), 3=3D Fix (>3 SV's used)
         self.fixqual = oneOf('0 1 2')   # 0=NA/Invalid, 1=GPS, 2=DGPS
 
-	self.tempunits = oneOf('C F')
+        self.tempunits = oneOf('C F')
+        self.windref = oneOf('R T')
 
         self.lat = (self.r + self.delimiter + self.ns).setParseAction(to_latlon)
         self.lon = (self.r + self.delimiter + self.ew).setParseAction(to_latlon)

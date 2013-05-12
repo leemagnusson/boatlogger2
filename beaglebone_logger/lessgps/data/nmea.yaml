@@ -12,7 +12,7 @@ GLL:
     - Lat: lat
     - Lon: lon
     - UTC: utc
-    - GPSStat: gpsstat
+    - GPSStat: stat
     - FixKind?: fixkind
 GSA:
     - FixMode: fixmode
@@ -32,7 +32,7 @@ GSV:
         - '4': [{PRN: ro}, {Elevation: ro}, {Azimuth: ro}, {SNR: ro}]
 RMC:
     - UTC: utc
-    - GPSStat: gpsstat
+    - GPSStat: stat
     - Lat: lat
     - Lon: lon
     - SOG: r
@@ -48,3 +48,13 @@ VTG:
     - FixKind?: fixkind
 MTW:
     - Temp: [{Value: r}, {Ref: tempunits}]
+MWV:
+    - WindAngle: [{Value: r}, {Ref: windref}]
+    - WindSpeed: [{Value: r}, {Unit: su}]
+    - Status: stat
+VHW:
+    - DegreesTrue: [{Value: r}, {Ref: mt}]
+    - DegreesMagnetic: [{Value: r}, {Ref: mt}]
+    - SOW: [{Value: r}, {Ref: su}]
+    - SOWK: [{Value: r}, {Ref: su}]
+
