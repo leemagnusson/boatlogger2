@@ -57,8 +57,7 @@ void main(void) {
    // for(i=0;i<50000;i++);
 
 	  while(!mainFlags); // _Wait;		// waiting for something to happen, will sleep here
-	  
-	  //toggle_led(LED2);
+	  toggle_led(LED2);
 	  if (mainFlags & F_AD_DATA) {
 		  if(take_measurements)
 			  data_process();

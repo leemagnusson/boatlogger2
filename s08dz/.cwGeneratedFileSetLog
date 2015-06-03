@@ -6,4 +6,4 @@ Lib/mc9s08dz60.c
 Project_Settings/Linker_Files/Project.prm
 Project_Settings/Linker_Files/burner.bbl
 Project_Settings/Debugger/MC9S08DZ60.mem
-Project_Settings/Debugger/MC9S08DZ60.tcl
+Project_Settings/Debugger/MC9S08DZ60.tclReferencedRSESystems.xml

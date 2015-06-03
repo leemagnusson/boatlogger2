@@ -26,7 +26,7 @@
 <intAttribute key="com.freescale.analysis.VAL_DBGCCX" value="0"/>
 <intAttribute key="com.freescale.analysis.VAL_DBGCT" value="0"/>
 <booleanAttribute key="com.freescale.cdt.debug.cw.CW_SHADOWED_PREF.CCS_Remote_Connection.specifyCCSExe" value="false"/>
-<intAttribute key="com.freescale.cdt.debug.cw.CW_SHADOWED_PREF.Debugger PIC Settings Panel.altLoadAddr" value="0"/>
+<stringAttribute key="com.freescale.cdt.debug.cw.CW_SHADOWED_PREF.Debugger PIC Settings Panel.altLoadAddr" value="0"/>
 <booleanAttribute key="com.freescale.cdt.debug.cw.CW_SHADOWED_PREF.Debugger PIC Settings Panel.enableAltLoadAddr" value="false"/>
 <booleanAttribute key="com.freescale.cdt.debug.cw.CW_SHADOWED_PREF.Embedded Download.IDconstant" value="true"/>
 <booleanAttribute key="com.freescale.cdt.debug.cw.CW_SHADOWED_PREF.Embedded Download.IDexecutable" value="true"/>
@@ -44,15 +44,21 @@
 <booleanAttribute key="com.freescale.cdt.debug.cw.CW_SHADOWED_PREF.Embedded Download.SVexecutable" value="false"/>
 <booleanAttribute key="com.freescale.cdt.debug.cw.CW_SHADOWED_PREF.Embedded Download.SVinitialized" value="false"/>
 <booleanAttribute key="com.freescale.cdt.debug.cw.CW_SHADOWED_PREF.Embedded Download.SVuninitialized" value="false"/>
+<intAttribute key="com.freescale.cdt.debug.cw.CW_SHADOWED_PREF.Embedded Initialization.coreIndex" value="0"/>
 <booleanAttribute key="com.freescale.cdt.debug.cw.CW_SHADOWED_PREF.Embedded Initialization.homogeneousMulticore" value="false"/>
 <stringAttribute key="com.freescale.cdt.debug.cw.CW_SHADOWED_PREF.Embedded Initialization.initPath" value=""/>
 <stringAttribute key="com.freescale.cdt.debug.cw.CW_SHADOWED_PREF.Embedded Initialization.memConfigPath" value="${ProjDirPath}/Project_Settings/Debugger/MC9S08DZ60.mem"/>
 <stringAttribute key="com.freescale.cdt.debug.cw.CW_SHADOWED_PREF.Embedded Initialization.simulator" value=""/>
-<stringAttribute key="com.freescale.cdt.debug.cw.CW_SHADOWED_PREF.Embedded Initialization.systemType" value=""/>
+<booleanAttribute key="com.freescale.cdt.debug.cw.CW_SHADOWED_PREF.Embedded Initialization.smp" value="false"/>
+<stringAttribute key="com.freescale.cdt.debug.cw.CW_SHADOWED_PREF.Embedded Initialization.systemType" value="com.freescale.cw.system.hcs08.HCS08D.MC9S08DZ60"/>
 <booleanAttribute key="com.freescale.cdt.debug.cw.CW_SHADOWED_PREF.Embedded Initialization.useDefaultConfigFile" value="false"/>
 <booleanAttribute key="com.freescale.cdt.debug.cw.CW_SHADOWED_PREF.Embedded Initialization.useInitFile" value="false"/>
 <booleanAttribute key="com.freescale.cdt.debug.cw.CW_SHADOWED_PREF.Embedded Initialization.useMemoryConfigFile" value="true"/>
 <stringAttribute key="com.freescale.cdt.debug.cw.CW_SHADOWED_PREF.HC08 Debugger.processor" value="MC9S08DZ60"/>
+<booleanAttribute key="com.freescale.cdt.debug.cw.CW_SHADOWED_PREF.HC08 Interrupt.interrupt_disabled" value="true"/>
+<listAttribute key="com.freescale.cdt.debug.cw.CoreNameList">
+<listEntry value="MC9S08DZ60#0"/>
+</listAttribute>
 <listAttribute key="com.freescale.cdt.debug.cw.Debug"/>
 <booleanAttribute key="com.freescale.cdt.debug.cw.DebuggerTab.StopAtProgramEntryPoint" value="false"/>
 <booleanAttribute key="com.freescale.cdt.debug.cw.DebuggerTab.StopAtStartUp" value="true"/>
@@ -72,12 +78,29 @@
 <listEntry value="___CLDE_SCRIPT___"/>
 </listAttribute>
 <listAttribute key="com.freescale.cdt.debug.cw.ExecutablePath"/>
+<booleanAttribute key="com.freescale.cdt.debug.cw.InitializePC" value="true"/>
+<booleanAttribute key="com.freescale.cdt.debug.cw.InitializePCAtProgramEntryPoint" value="true"/>
+<stringAttribute key="com.freescale.cdt.debug.cw.InitializePCAtSymbol" value="main"/>
+<booleanAttribute key="com.freescale.cdt.debug.cw.InitializePCAtUserSpecified" value="false"/>
+<stringAttribute key="com.freescale.cdt.debug.cw.LaunchMode" value="DOWNLOAD"/>
 <booleanAttribute key="com.freescale.cdt.debug.cw.PN_StopAtProgramEntryPoint" value="false"/>
+<booleanAttribute key="com.freescale.cdt.debug.cw.PN_StopAtStartUp" value="true"/>
+<booleanAttribute key="com.freescale.cdt.debug.cw.PN_StopAtUserSpecified" value="true"/>
 <stringAttribute key="com.freescale.cdt.debug.cw.RefreshPolicy.RefreshPeriod" value="2.0"/>
 <listAttribute key="com.freescale.cdt.debug.cw.RemoteDownload"/>
 <listAttribute key="com.freescale.cdt.debug.cw.RemotePath"/>
+<booleanAttribute key="com.freescale.cdt.debug.cw.ResumeProgram" value="true"/>
+<listAttribute key="com.freescale.cdt.debug.cw.SMPCores"/>
+<booleanAttribute key="com.freescale.cdt.debug.cw.SYNC_WITH_ENCL_PROJ" value="true"/>
 <booleanAttribute key="com.freescale.cdt.debug.cw.Symbolics.CacheSymbolicsBetweenRuns" value="false"/>
 <booleanAttribute key="com.freescale.cdt.debug.cw.Symbolics.UseExecutableCopy" value="false"/>
+<stringAttribute key="com.freescale.cdt.debug.cw.UDPPort" value="1234"/>
+<booleanAttribute key="com.freescale.cdt.debug.cw.UseApplication" value="true"/>
+<booleanAttribute key="com.freescale.cdt.debug.cw.core.settings.ConnectionCommonData.TargetConnectionLost.RetryConnectionOn" value="false"/>
+<intAttribute key="com.freescale.cdt.debug.cw.core.settings.ConnectionCommonData.TargetConnectionLost.RetryTimeout" value="20"/>
+<booleanAttribute key="com.freescale.cdt.debug.cw.core.settings.ConnectionCommonData.TargetConnectionLost.RetryWithTimeoutOn" value="false"/>
+<booleanAttribute key="com.freescale.cdt.debug.cw.core.settings.ConnectionCommonData.TargetConnectionLost.TerminateConnectionOn" value="false"/>
+<booleanAttribute key="com.freescale.cdt.debug.cw.core.settings.ConnectionCommonData.TargetConnectionLost.promptUserActionOn" value="true"/>
 <stringAttribute key="com.freescale.cdt.debug.cw.core.settings.DebuggerCommonData.Connection Protocol Plugin Name" value="HC08 GDI"/>
 <stringAttribute key="com.freescale.cdt.debug.cw.core.settings.DebuggerCommonData.Connection Type" value="com.pemicro.mcu.debug.connections.pne.hcs08"/>
 <stringAttribute key="com.freescale.cdt.debug.cw.core.settings.DebuggerCommonData.Connection Type CW Panel" value=""/>
@@ -90,12 +113,50 @@
 <stringAttribute key="com.freescale.cdt.debug.cw.core.settings.GdiConnection.Generic.ConfigFile" value=""/>
 <stringAttribute key="com.freescale.cdt.debug.cw.core.settings.GdiConnection.Generic.Library" value=""/>
 <listAttribute key="com.freescale.cdt.debug.cw.core.settings.GdiConnection.Generic.names_of_user_added_attributes"/>
+<stringAttribute key="com.freescale.cdt.debug.cw.core.settings.rseSystemId" value="com.freescale.cdt.debug.cw.core.ui.rse.systemtype.bareboard.hardware.150603161628-0700"/>
+<stringAttribute key="com.freescale.cdt.debug.cw.debuggerAddress" value="127.0.0.1"/>
+<booleanAttribute key="com.freescale.cdt.debug.cw.disableIO" value="false"/>
+<stringAttribute key="com.freescale.cdt.debug.cw.ethCtrl" value="UEC1"/>
+<booleanAttribute key="com.freescale.cdt.debug.cw.executeInitScripts" value="true"/>
+<booleanAttribute key="com.freescale.cdt.debug.cw.executePerCoresReset" value="false"/>
+<booleanAttribute key="com.freescale.cdt.debug.cw.executePerprocessorReset" value="false"/>
+<booleanAttribute key="com.freescale.cdt.debug.cw.executeReset" value="false"/>
+<booleanAttribute key="com.freescale.cdt.debug.cw.executeResetSequence" value="true"/>
+<stringAttribute key="com.freescale.cdt.debug.cw.gateway" value="127.0.0.1"/>
 <stringAttribute key="com.freescale.cdt.debug.cw.initPath" value=""/>
+<listAttribute key="com.freescale.cdt.debug.cw.initPathList">
+<listEntry value=""/>
+</listAttribute>
+<stringAttribute key="com.freescale.cdt.debug.cw.macAddress" value="**-**-**-**-**-**"/>
+<listAttribute key="com.freescale.cdt.debug.cw.memConfigPathList">
+<listEntry value="${ProjDirPath}/Project_Settings/Debugger/MC9S08DZ60.mem"/>
+</listAttribute>
+<stringAttribute key="com.freescale.cdt.debug.cw.netMask" value="255.255.255.255"/>
 <stringAttribute key="com.freescale.cdt.debug.cw.osawareness.osContributorID" value="None"/>
 <stringAttribute key="com.freescale.cdt.debug.cw.osawareness.rtospluginname" value=""/>
 <stringAttribute key="com.freescale.cdt.debug.cw.osawareness.targetos" value="None"/>
+<listAttribute key="com.freescale.cdt.debug.cw.perCoreResetList"/>
+<listAttribute key="com.freescale.cdt.debug.cw.perProcessorResetList"/>
 <stringAttribute key="com.freescale.cdt.debug.cw.processor" value="MC9S08DZ60"/>
+<listAttribute key="com.freescale.cdt.debug.cw.runOutOfResetList">
+<listEntry value="false"/>
+</listAttribute>
+<booleanAttribute key="com.freescale.cdt.debug.cw.skipSystemInitialization" value="false"/>
+<stringAttribute key="com.freescale.cdt.debug.cw.targetAddress" value="127.0.0.1"/>
+<booleanAttribute key="com.freescale.cdt.debug.cw.useGateway" value="false"/>
+<booleanAttribute key="com.freescale.cdt.debug.cw.useHSSTIO" value="false"/>
 <booleanAttribute key="com.freescale.cdt.debug.cw.useInitFile" value="false"/>
+<listAttribute key="com.freescale.cdt.debug.cw.useInitPathList">
+<listEntry value="false"/>
+</listAttribute>
+<booleanAttribute key="com.freescale.cdt.debug.cw.useMacAddress" value="false"/>
+<listAttribute key="com.freescale.cdt.debug.cw.useMemConfigPathList">
+<listEntry value="true"/>
+</listAttribute>
+<booleanAttribute key="com.freescale.cdt.debug.cw.useNetworkTransferIO" value="false"/>
+<booleanAttribute key="com.freescale.cdt.debug.cw.useSerialTransferIO" value="false"/>
+<booleanAttribute key="com.freescale.cdt.debug.cw.useStopTransferIO" value="true"/>
+<booleanAttribute key="com.freescale.cdt.debug.cw.useUDPPort" value="false"/>
 <listAttribute key="com.freescale.mcu.debug.connections.osbdm.hcs08.names_of_user_added_attributes"/>
 <stringAttribute key="com.freescale.mcu.debug.connections.softec.bdc08.SofTec_Microsystems_GdiHCS08_CommDlg" value="NO"/>
 <stringAttribute key="com.freescale.mcu.debug.connections.softec.bdc08.SofTec_Microsystems_GdiHCS08_Hardware" value="USBSPYDER08"/>
@@ -105,23 +166,38 @@
 <stringAttribute key="com.freescale.mcu.debug.connections.softec.bdc08.SupportLogicalAddresses" value="NO"/>
 <listAttribute key="com.freescale.mcu.debug.connections.softec.bdc08.names_of_user_added_attributes"/>
 <listAttribute key="com.freescale.panel.list">
-<listEntry value="HC08 Debugger"/>
+<listEntry value="Debugger Common Settings"/>
+<listEntry value="HC08 Interrupt"/>
 <listEntry value="Embedded Download"/>
-<listEntry value="GDI Connection"/>
-<listEntry value="GDI Remote Connection"/>
-<listEntry value="GDI Remote Connection"/>
-<listEntry value="com.freescale.mcu.debug.connections.SoftecBDC08"/>
-<listEntry value="com.freescale.mcu.debug.connections.osbdm.hcs08"/>
-<listEntry value="com.pemicro.mcu.debug.connections.pne.hcs08"/>
 <listEntry value="Debugger PIC Settings Panel"/>
 <listEntry value="Other Executables"/>
 <listEntry value="Symbolics"/>
 <listEntry value="osawareness"/>
-<listEntry value="View Refresh"/>
 </listAttribute>
-<listAttribute key="com.pemicro.mcu.debug.connections.pne.hcs08.CommandLineArgs">
-<listEntry value="hcs08_icd"/>
-</listAttribute>
+<booleanAttribute key="com.freescale.sa.mcu.launch.CONTINUOUS_TRACE" value="false"/>
+<booleanAttribute key="com.freescale.sa.mcu.launch.DATA_TRACE" value="false"/>
+<booleanAttribute key="com.freescale.sa.mcu.launch.ENABLE_ANALYSIS" value="false"/>
+<booleanAttribute key="com.freescale.sa.mcu.launch.ENABLE_LOGGING" value="false"/>
+<booleanAttribute key="com.freescale.sa.mcu.launch.EXPERT_SETTINGS" value="false"/>
+<intAttribute key="com.freescale.sa.mcu.launch.HCS08_COLLECT_TRIGGER_PROGRAM" value="0"/>
+<booleanAttribute key="com.freescale.sa.mcu.launch.HCS08_STOP_ON_BUFFER_FULL" value="true"/>
+<booleanAttribute key="com.freescale.sa.mcu.launch.HCS08_STOP_ON_TRIGGER" value="true"/>
+<stringAttribute key="com.freescale.sa.mcu.launch.HCS08_TRIGGER_DATA_COMPARE" value="0xFFFFFFFF"/>
+<intAttribute key="com.freescale.sa.mcu.launch.HCS08_TRIGGER_TYPE_PROGRAM" value="0"/>
+<booleanAttribute key="com.freescale.sa.mcu.launch.INST_MEMORY_ACCESS" value="true"/>
+<booleanAttribute key="com.freescale.sa.mcu.launch.LOOP1_MODE" value="false"/>
+<booleanAttribute key="com.freescale.sa.mcu.launch.PCSYNC_TRACE" value="false"/>
+<booleanAttribute key="com.freescale.sa.mcu.launch.PROGRAM_TRACE" value="true"/>
+<booleanAttribute key="com.freescale.sa.mcu.launch.SET_TGT_SETTING_ON_RUN" value="false"/>
+<booleanAttribute key="com.freescale.sa.mcu.launch.USER_CONFIG" value="false"/>
+<intAttribute key="com.freescale.sa.mcu.launch.VAL_DBGCA" value="0"/>
+<intAttribute key="com.freescale.sa.mcu.launch.VAL_DBGCAX" value="0"/>
+<intAttribute key="com.freescale.sa.mcu.launch.VAL_DBGCB" value="0"/>
+<intAttribute key="com.freescale.sa.mcu.launch.VAL_DBGCBX" value="0"/>
+<intAttribute key="com.freescale.sa.mcu.launch.VAL_DBGCC" value="0"/>
+<intAttribute key="com.freescale.sa.mcu.launch.VAL_DBGCCX" value="0"/>
+<intAttribute key="com.freescale.sa.mcu.launch.VAL_DBGCT" value="0"/>
+<stringAttribute key="com.pemicro.mcu.debug.connections.pne.hcs08.CommandLineArgs" value="[hcs08_icd]"/>
 <stringAttribute key="com.pemicro.mcu.debug.connections.pne.hcs08.ConfigFile" value=""/>
 <stringAttribute key="com.pemicro.mcu.debug.connections.pne.hcs08.Library" value="hcs08_pne_gdi"/>
 <stringAttribute key="com.pemicro.mcu.debug.connections.pne.hcs08.STARTUP_CyclonePro_PowerDownDelay" value="250"/>
@@ -136,6 +212,7 @@
 <stringAttribute key="com.pemicro.mcu.debug.connections.pne.hcs08.STARTUP_USE_CYCLONEPRO_RELAYS" value="1"/>
 <stringAttribute key="com.pemicro.mcu.debug.connections.pne.hcs08.STARTUP_interface_selection" value="1"/>
 <stringAttribute key="com.pemicro.mcu.debug.connections.pne.hcs08.UUID" value="29b1f9a9-929d-4a50-81ae-7c3004c517f0"/>
+<intAttribute key="org.eclipse.cdt.launch.ATTR_BUILD_BEFORE_LAUNCH_ATTR" value="2"/>
 <stringAttribute key="org.eclipse.cdt.launch.DEBUGGER_ID" value="com.freescale.cdt.debug.cw.hc08.HC08Debugger"/>
 <stringAttribute key="org.eclipse.cdt.launch.DEBUGGER_REGISTER_GROUPS" value=""/>
 <stringAttribute key="org.eclipse.cdt.launch.DEBUGGER_START_MODE" value="run"/>
@@ -144,8 +221,8 @@
 <booleanAttribute key="org.eclipse.cdt.launch.ENABLE_REGISTER_BOOKKEEPING" value="false"/>
 <booleanAttribute key="org.eclipse.cdt.launch.ENABLE_RESTORE_WATCHPOINTS" value="true"/>
 <booleanAttribute key="org.eclipse.cdt.launch.ENABLE_VARIABLE_BOOKKEEPING" value="false"/>
-<stringAttribute key="org.eclipse.cdt.launch.FORMAT" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&lt;contentList&gt;&lt;content id=&quot;l2-calc_currents-(format)&quot; val=&quot;1&quot;/&gt;&lt;content id=&quot;ad_sel-adc_isr-(format)&quot; val=&quot;1&quot;/&gt;&lt;content id=&quot;ad_sel-next_ad_sel-(format)&quot; val=&quot;1&quot;/&gt;&lt;content id=&quot;k-_LAND_k_is_k_and_j-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;j-_LAND_k_is_k_and_j-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;dw_id-*m-m-transmit_iso-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;source_address-transmit_iso-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;data_length-print_to_serial-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;length-m-data_process-(format)&quot; val=&quot;1&quot;/&gt;&lt;content id=&quot;pf-m-data_process-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;ad_sel-[1]-V_meas-data_process-(format)&quot; val=&quot;1&quot;/&gt;&lt;content id=&quot;source_address-address_claim_message-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;dw_id-m-address_claim_message-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;pf1-bits-m-address_claim_message-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;sa-bits-m-address_claim_message-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;ps2-bits-m-address_claim_message-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;ad_sel-[1]-C_meas-calc_currents-(format)&quot; val=&quot;1&quot;/&gt;&lt;/contentList&gt;"/>
-<stringAttribute key="org.eclipse.cdt.launch.GLOBAL_VARIABLES" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;globalVariableList&gt;&#13;&#10;&lt;globalVariable name=&quot;ad_raw_vals&quot; path=&quot;&quot;/&gt;&#13;&#10;&lt;/globalVariableList&gt;&#13;&#10;"/>
+<stringAttribute key="org.eclipse.cdt.launch.FORMAT" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&lt;contentList&gt;&lt;content id=&quot;source_address-transmit_iso-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;ad_sel-[1]-C_meas-calc_currents-(format)&quot; val=&quot;1&quot;/&gt;&lt;content id=&quot;ps2-bits-m-address_claim_message-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;sa-bits-m-address_claim_message-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;pf1-bits-m-address_claim_message-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;dw_id-m-address_claim_message-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;source_address-address_claim_message-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;ad_sel-[1]-V_meas-data_process-(format)&quot; val=&quot;1&quot;/&gt;&lt;content id=&quot;pf-m-data_process-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;length-m-data_process-(format)&quot; val=&quot;1&quot;/&gt;&lt;content id=&quot;dw_id-*m-m-transmit_iso-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;j-_LAND_k_is_k_and_j-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;k-_LAND_k_is_k_and_j-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;ad_sel-next_ad_sel-(format)&quot; val=&quot;1&quot;/&gt;&lt;content id=&quot;ad_sel-adc_isr-(format)&quot; val=&quot;1&quot;/&gt;&lt;content id=&quot;l2-calc_currents-(format)&quot; val=&quot;1&quot;/&gt;&lt;content id=&quot;data_length-print_to_serial-(format)&quot; val=&quot;4&quot;/&gt;&lt;/contentList&gt;"/>
+<stringAttribute key="org.eclipse.cdt.launch.GLOBAL_VARIABLES" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;globalVariableList&gt;&#13;&#10;&lt;globalVariable name=&quot;ad_raw_vals&quot; path=&quot;&quot;/&gt;&#13;&#10;&lt;globalVariable name=&quot;ad_raw_vals&quot; path=&quot;&quot;/&gt;&#13;&#10;&lt;globalVariable name=&quot;ad_raw_vals&quot; path=&quot;&quot;/&gt;&#13;&#10;&lt;globalVariable name=&quot;ad_raw_vals&quot; path=&quot;&quot;/&gt;&#13;&#10;&lt;globalVariable name=&quot;ad_raw_vals&quot; path=&quot;&quot;/&gt;&#13;&#10;&lt;globalVariable name=&quot;ad_raw_vals&quot; path=&quot;&quot;/&gt;&#13;&#10;&lt;globalVariable name=&quot;ad_raw_vals&quot; path=&quot;&quot;/&gt;&#13;&#10;&lt;globalVariable name=&quot;ad_raw_vals&quot; path=&quot;&quot;/&gt;&#13;&#10;&lt;/globalVariableList&gt;&#13;&#10;"/>
 <stringAttribute key="org.eclipse.cdt.launch.MEMORY_BLOCKS" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;memoryBlockExpressionList/&gt;&#13;&#10;"/>
 <stringAttribute key="org.eclipse.cdt.launch.PROGRAM_NAME" value="MC9S08DZ60/test.abs"/>
 <stringAttribute key="org.eclipse.cdt.launch.PROJECT_ATTR" value="test"/>
