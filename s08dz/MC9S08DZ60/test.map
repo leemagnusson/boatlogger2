@@ -36,8 +36,8 @@ Entry point: 0x197B (_Startup)
 _startupData is allocated at 0x1984 and uses 6 Bytes
 extern struct _tagStartup {
   unsigned nofZeroOut     1
-  _Range   pZeroOut       0x100     946
-  _Copy    *toCopyDownBeg 0x29AB
+  _Range   pZeroOut       0x100     950
+  _Copy    *toCopyDownBeg 0x2A08
 } _startupData;
 
 *********************************************************************************************
@@ -49,8 +49,8 @@ Section Name                    Size  Type     From       To       Segment
 .startData                        14     R     0x1984     0x1991   ROM
 .rodata                          214     R     0x1992     0x1A67   ROM
 .rodata1                          12     R     0x1A68     0x1A73   ROM
-.text                           3895     R     0x1A74     0x29AA   ROM
-.copy                             20     R     0x29AB     0x29BE   ROM
+.text                           3988     R     0x1A74     0x2A07   ROM
+.copy                             20     R     0x2A08     0x2A1B   ROM
 .abs_section_ffd0                  2     R     0xFFD0     0xFFD1   .absSeg0
 .abs_section_ffc6                  2     R     0xFFC6     0xFFC7   .absSeg1
 .abs_section_ffcc                  2     R     0xFFCC     0xFFCD   .absSeg2
@@ -238,14 +238,14 @@ Section Name                    Size  Type     From       To       Segment
 .abs_section_18be                  2   N/I     0x18BE     0x18BF   .absSeg184
 .abs_section_18a0                  4   N/I     0x18A0     0x18A3   .absSeg185
 .abs_section_18b0                  4   N/I     0x18B0     0x18B3   .absSeg186
-.bss                             873   R/W      0x10E      0x476   RAM
-.common                           59   R/W      0x477      0x4B1   RAM
-.stack                           128   R/W      0x4B2      0x531   RAM
+.bss                             877   R/W      0x10E      0x47A   RAM
+.common                           59   R/W      0x47B      0x4B5   RAM
+.stack                           128   R/W      0x4B6      0x535   RAM
 .vectSeg187_vect                   2     R     0xFFFE     0xFFFF   .vectSeg187
 
 Summary of section sizes per section type:
-READ_ONLY (R):        10C9 (dec:     4297)
-READ_WRITE (R/W):      432 (dec:     1074)
+READ_ONLY (R):        1126 (dec:     4390)
+READ_WRITE (R/W):      436 (dec:     1078)
 NO_INIT (N/I):          D3 (dec:      211)
 
 *********************************************************************************************
@@ -269,13 +269,13 @@ MODULE:                 -- adc_c.obj --
      ad_avg_count.2                             10F       1       1       3   .bss        
      ad_avg_val.3                               110       2       2       6   .bss        
      _Vector_23                                FFD0       2       2       0   .abs_section_ffd0
-     ad_raw_vals                                477      38      56       6   .common     
+     ad_raw_vals                                47B      38      56       6   .common     
 MODULE:                 -- can_c.obj --
 - PROCEDURES:
      init_can                                  1B26      BF     191       1   .text       
      generate_new_source_address               1BE5      14      20       3   .text       
      address_claim_message                     1BF9      6E     110       3   .text       
-     transmit_iso                              1C67      7A     122       2   .text       
+     transmit_iso                              1C67      7A     122       3   .text       
      receive_isr                               1CE1      22      34       1   .text       
      print_to_serial                           1D03      25      37       2   .text       
      iso_pdu1_rx                               1D28     1B9     441       3   .text       
@@ -289,80 +289,82 @@ MODULE:                 -- data_c.obj --
      calc_conversions                          1EED      45      69       1   .text       
      calc_voltages                             1F32      53      83       1   .text       
      calc_currents                             1F85      C2     194       2   .text       
-     output_power_messages                     2047      E7     231       2   .text       
+     output_power_messages                     2047     144     324       3   .text       
 - VARIABLES:
      conv_ref                                  1992       8       8       2   .rodata     
      V_meas                                    199A       9       9       2   .rodata     
      C_meas                                    19A3      64     100       6   .rodata     
      powers                                    1A07      50      80       2   .rodata     
      conv                                       113       8       8      25   .bss        
-     voltages                                   11B       6       6      22   .bss        
-     currents                                   121      28      40      22   .bss        
+     wind_counter.1                             11B       2       2       2   .bss        
+     dir_counter.2                              11D       2       2       2   .bss        
+     voltages                                   11F       6       6      22   .bss        
+     currents                                   125      28      40      22   .bss        
 MODULE:                 -- io_c.obj --
 - PROCEDURES:
-     init_io                                   212E      41      65       1   .text       
+     init_io                                   218B      41      65       1   .text       
 - VARIABLES:
-     loopback_mode                              4AF       1       1       4   .common     
-     ascii_out                                  4B0       1       1       2   .common     
-     take_measurements                          4B1       1       1       2   .common     
+     loopback_mode                              4B3       1       1       4   .common     
+     ascii_out                                  4B4       1       1       2   .common     
+     take_measurements                          4B5       1       1       2   .common     
 MODULE:                 -- led_c.obj --
 - PROCEDURES:
-     init_leds                                 216F       B      11       1   .text       
-     toggle_led                                217A      11      17       3   .text       
-     off_led                                   218B      11      17       1   .text       
+     init_leds                                 21CC       B      11       1   .text       
+     toggle_led                                21D7      11      17       3   .text       
+     off_led                                   21E8      11      17       1   .text       
 - VARIABLES:
 MODULE:                 -- main_c.obj --
 - PROCEDURES:
-     main                                      219C      9A     154       1   .text       
+     main                                      21F9      9A     154       1   .text       
 - VARIABLES:
      STRING...Eg.....3                         1A68       9       9       1   .rodata1    
-     mainFlags                                  149       2       2       4   .bss        
+     mainFlags                                  14D       2       2       4   .bss        
 MODULE:                 -- mcg_c.obj --
 - PROCEDURES:
-     init_mcg                                  2236       D      13       1   .text       
-     pee                                       2243      2E      46       1   .text       
-     pbe                                       2271      44      68       2   .text       
-     fbe                                       22B5      43      67       2   .text       
-     fbi                                       22F8      31      49       1   .text       
+     init_mcg                                  2293       D      13       1   .text       
+     pee                                       22A0      2E      46       1   .text       
+     pbe                                       22CE      44      68       2   .text       
+     fbe                                       2312      43      67       2   .text       
+     fbi                                       2355      31      49       1   .text       
 - VARIABLES:
-     Mode                                       14B       2       2       8   .bss        
+     Mode                                       14F       2       2       8   .bss        
 MODULE:                 -- rprintf_c.obj --
 - PROCEDURES:
-     rprintf_devopen                           2329       4       4       1   .text       
+     rprintf_devopen                           2386       4       4       1   .text       
 - VARIABLES:
-     putcharfunc                                14D       2       2       1   .bss        
+     putcharfunc                                151       2       2       1   .bss        
 MODULE:                 -- rtc_c.obj --
 - PROCEDURES:
-     init_rtc                                  232D      16      22       1   .text       
-     register_rtc_callback                     2343      1E      30       1   .text       
-     rtc_isr                                   2361      26      38       1   .text       
+     init_rtc                                  238A      16      22       1   .text       
+     register_rtc_callback                     23A0      1E      30       1   .text       
+     rtc_isr                                   23BE      26      38       1   .text       
 - VARIABLES:
-     seconds                                    14F       2       2       1   .bss        
-     rtc_callback_length                        151       1       1       3   .bss        
-     rtc_callbacks                              152       2       2       3   .bss        
+     seconds                                    153       2       2       1   .bss        
+     rtc_callback_length                        155       1       1       3   .bss        
+     rtc_callbacks                              156       2       2       3   .bss        
      _Vector_25                                FFCC       2       2       0   .abs_section_ffcc
 MODULE:                 -- serial_c.obj --
 - PROCEDURES:
-     init_serial                               2387       B      11       1   .text       
-     putcint1                                  2392       7       7       1   .text       
-     putc1                                     2399       E      14       4   .text       
-     putcontrol1                               23A7      12      18       2   .text       
-     puts1                                     23B9      52      82       5   .text       
-     cir_inc                                   240B      1A      26       2   .text       
-     cir_dec                                   2425      19      25       1   .text       
-     tx1_open_isr                              243E      67     103       1   .text       
+     init_serial                               23E4       B      11       1   .text       
+     putcint1                                  23EF       7       7       1   .text       
+     putc1                                     23F6       E      14       4   .text       
+     putcontrol1                               2404      12      18       2   .text       
+     puts1                                     2416      52      82       5   .text       
+     cir_inc                                   2468      1A      26       2   .text       
+     cir_dec                                   2482      19      25       1   .text       
+     tx1_open_isr                              249B      67     103       1   .text       
 - VARIABLES:
      HEX_MAP                                   1A57      11      17       2   .rodata     
      STRING....2                               1A71       3       3       1   .rodata1    
      buf1_end                                   108       2       2       3   .data       
-     buf1_pos                                   154       2       2       7   .bss        
-     nibble.3                                   156       1       1       3   .bss        
-     serial1_out_buf                            157     190     400       4   .bss        
-     serial1_out_control                        2E7     190     400       2   .bss        
+     buf1_pos                                   158       2       2       7   .bss        
+     nibble.3                                   15A       1       1       3   .bss        
+     serial1_out_buf                            15B     190     400       4   .bss        
+     serial1_out_control                        2EB     190     400       2   .bss        
      _Vector_18                                FFDA       2       2       0   .abs_section_ffda
 MODULE:                 -- timer_c.obj --
 - PROCEDURES:
-     init_timers                               24A5       1       1       1   .text       
+     init_timers                               2502       1       1       1   .text       
 - VARIABLES:
 MODULE:                 -- start08_c.obj --
 - PROCEDURES:
@@ -372,7 +374,7 @@ MODULE:                 -- start08_c.obj --
 - VARIABLES:
      _startupData                              1984       6       6       4   .startData  
 - LABELS:
-     __SEG_END_SSTACK                           532       0       0       1               
+     __SEG_END_SSTACK                           536       0       0       1               
 MODULE:                 -- mc9s08dz60_c.obj --
 - PROCEDURES:
 - VARIABLES:
@@ -561,54 +563,54 @@ MODULE:                 -- mc9s08dz60_c.obj --
      _CANTIDR                                  18B0       4       4       2   .abs_section_18b0
 MODULE:                 -- rtshc08.o (ansiis.lib) --
 - PROCEDURES:
-     _PUSH_ARGS_L                              24A6      20      32       2   .text       
-     _ENTER_UNARY_L                            24C6      29      41       1   .text       
-     _ENTER_BINARY_L                           24EF      16      22       3   .text       
-     _ENTER_BINARY_L_RC                        2505      19      25       6   .text       
-     _IDIVMOD                                  251E      69     105       1   .text       
-     _SPLITSIGN                                2587      1C      28       1   .text       
-     _LADD_k_is_k_plus_j                       25A3      1F      31       1   .text       
-     _k_is_k_plus_j_l                          25C2      1E      30       2   .text       
-     _k_is_k_plus_j_i                          25E0      12      18       3   .text       
-     _LSUB_k_is_k_minus_j                      25F2      1F      31       1   .text       
-     _LAND_k_is_k_and_j                        2611      1F      31       1   .text       
-     _LMUL_k_is_k_mul_j                        2630      81     129       2   .text       
-     _LDIVMOD                                  26B1      A4     164       2   .text       
-     _NEG_L_HX                                 2755      13      19       3   .text       
-     _ABS_L_HX                                 2768       6       6       2   .text       
-     _SPLITSIGN_L                              276E       A      10       2   .text       
-     _LMODS_k_is_k_mod_j                       2778      18      24       1   .text       
-     _LDIVS_k_is_k_div_j                       2790      27      39       2   .text       
-     _LCMP_k_rel_j                             27B7      1F      31       1   .text       
-     _IMUL_STAR08                              27D6      27      39       1   .text       
-     _IMODS_STAR08                             27FD      25      37       1   .text       
-     _ILSR                                     2822       C      12       1   .text       
-     _LADD_RC                                  282E       6       6       3   .text       
-     _LSUB                                     2834       6       6       1   .text       
-     _LAND_RC                                  283A       6       6       1   .text       
-     _LMUL                                     2840       6       6       3   .text       
-     _LMUL_RC                                  2846       6       6       2   .text       
-     _LDIVS                                    284C       6       6       1   .text       
-     _LDIVS_RC                                 2852       6       6       1   .text       
-     _LMODS_RC                                 2858       6       6       1   .text       
-     _LLSL                                     285E      16      22       1   .text       
-     _LCMP_RC                                  2874       6       6       4   .text       
-     _COPY                                     287A      30      48       1   .text       
-     _POP32                                    28AA      1A      26      10   .text       
-     _SEXT16_32                                28C4       D      13       2   .text       
-     _Jump_Table_Header_Offset                 28D1      24      36       1   .text       
-     _PUSH_CC                                  28F5       F      15       1   .text       
-     _POP_CC                                   2904       F      15       1   .text       
+     _PUSH_ARGS_L                              2503      20      32       2   .text       
+     _ENTER_UNARY_L                            2523      29      41       1   .text       
+     _ENTER_BINARY_L                           254C      16      22       3   .text       
+     _ENTER_BINARY_L_RC                        2562      19      25       6   .text       
+     _IDIVMOD                                  257B      69     105       1   .text       
+     _SPLITSIGN                                25E4      1C      28       1   .text       
+     _LADD_k_is_k_plus_j                       2600      1F      31       1   .text       
+     _k_is_k_plus_j_l                          261F      1E      30       2   .text       
+     _k_is_k_plus_j_i                          263D      12      18       3   .text       
+     _LSUB_k_is_k_minus_j                      264F      1F      31       1   .text       
+     _LAND_k_is_k_and_j                        266E      1F      31       1   .text       
+     _LMUL_k_is_k_mul_j                        268D      81     129       2   .text       
+     _LDIVMOD                                  270E      A4     164       2   .text       
+     _NEG_L_HX                                 27B2      13      19       3   .text       
+     _ABS_L_HX                                 27C5       6       6       2   .text       
+     _SPLITSIGN_L                              27CB       A      10       2   .text       
+     _LMODS_k_is_k_mod_j                       27D5      18      24       1   .text       
+     _LDIVS_k_is_k_div_j                       27ED      27      39       2   .text       
+     _LCMP_k_rel_j                             2814      1F      31       1   .text       
+     _IMUL_STAR08                              2833      27      39       1   .text       
+     _IMODS_STAR08                             285A      25      37       1   .text       
+     _ILSR                                     287F       C      12       1   .text       
+     _LADD_RC                                  288B       6       6       3   .text       
+     _LSUB                                     2891       6       6       1   .text       
+     _LAND_RC                                  2897       6       6       1   .text       
+     _LMUL                                     289D       6       6       3   .text       
+     _LMUL_RC                                  28A3       6       6       2   .text       
+     _LDIVS                                    28A9       6       6       1   .text       
+     _LDIVS_RC                                 28AF       6       6       1   .text       
+     _LMODS_RC                                 28B5       6       6       1   .text       
+     _LLSL                                     28BB      16      22       1   .text       
+     _LCMP_RC                                  28D1       6       6       4   .text       
+     _COPY                                     28D7      30      48       1   .text       
+     _POP32                                    2907      1A      26      10   .text       
+     _SEXT16_32                                2921       D      13       2   .text       
+     _Jump_Table_Header_Offset                 292E      24      36       1   .text       
+     _PUSH_CC                                  2952       F      15       1   .text       
+     _POP_CC                                   2961       F      15       1   .text       
 - VARIABLES:
 MODULE:                 -- stdlib.o (ansiis.lib) --
 - PROCEDURES:
-     rand                                      2913      6B     107       1   .text       
-     srand                                     297E       9       9       1   .text       
+     rand                                      2970      6B     107       1   .text       
+     srand                                     29DB       9       9       1   .text       
 - VARIABLES:
      seed                                       10A       4       4       9   .data       
 MODULE:                 -- string.o (ansiis.lib) --
 - PROCEDURES:
-     _memcpy_8bitCount                         2987      24      36       1   .text       
+     _memcpy_8bitCount                         29E4      24      36       1   .text       
 - VARIABLES:
 
 *********************************************************************************************
@@ -617,7 +619,7 @@ MODULE STATISTIC
 ---------------------------------------------------------------------------------------------
   adc_c.obj                                   60    178      2
   can_c.obj                                    9    955      2
-  data_c.obj                                  54    589    197
+  data_c.obj                                  58    682    197
   io_c.obj                                     3     65      0
   led_c.obj                                    0     45      0
   main_c.obj                                   2    154      9
@@ -653,9 +655,10 @@ SECTION: ".text"
 SECTION: ".data"
   name buf1_end seed 
 SECTION: ".bss"
-  ad_sel.1 ad_avg_count.2 ad_avg_val.3 source_address conv voltages currents 
-  mainFlags Mode putcharfunc seconds rtc_callback_length rtc_callbacks buf1_pos 
-  nibble.3 serial1_out_buf serial1_out_control 
+  ad_sel.1 ad_avg_count.2 ad_avg_val.3 source_address conv wind_counter.1 
+  dir_counter.2 voltages currents mainFlags Mode putcharfunc seconds 
+  rtc_callback_length rtc_callbacks buf1_pos nibble.3 serial1_out_buf 
+  serial1_out_control 
 SECTION: ".init"
   loadByte Init _Startup 
 SECTION: ".rodata"
@@ -1131,22 +1134,24 @@ OBJECT LIST SORTED BY ADDRESS
      ad_avg_val.3                               110       2       2       6   .bss        
      source_address                             112       1       1       4   .bss        
      conv                                       113       8       8      25   .bss        
-     voltages                                   11B       6       6      22   .bss        
-     currents                                   121      28      40      22   .bss        
-     mainFlags                                  149       2       2       4   .bss        
-     Mode                                       14B       2       2       8   .bss        
-     putcharfunc                                14D       2       2       1   .bss        
-     seconds                                    14F       2       2       1   .bss        
-     rtc_callback_length                        151       1       1       3   .bss        
-     rtc_callbacks                              152       2       2       3   .bss        
-     buf1_pos                                   154       2       2       7   .bss        
-     nibble.3                                   156       1       1       3   .bss        
-     serial1_out_buf                            157     190     400       4   .bss        
-     serial1_out_control                        2E7     190     400       2   .bss        
-     ad_raw_vals                                477      38      56       6   .common     
-     loopback_mode                              4AF       1       1       4   .common     
-     ascii_out                                  4B0       1       1       2   .common     
-     take_measurements                          4B1       1       1       2   .common     
+     wind_counter.1                             11B       2       2       2   .bss        
+     dir_counter.2                              11D       2       2       2   .bss        
+     voltages                                   11F       6       6      22   .bss        
+     currents                                   125      28      40      22   .bss        
+     mainFlags                                  14D       2       2       4   .bss        
+     Mode                                       14F       2       2       8   .bss        
+     putcharfunc                                151       2       2       1   .bss        
+     seconds                                    153       2       2       1   .bss        
+     rtc_callback_length                        155       1       1       3   .bss        
+     rtc_callbacks                              156       2       2       3   .bss        
+     buf1_pos                                   158       2       2       7   .bss        
+     nibble.3                                   15A       1       1       3   .bss        
+     serial1_out_buf                            15B     190     400       4   .bss        
+     serial1_out_control                        2EB     190     400       2   .bss        
+     ad_raw_vals                                47B      38      56       6   .common     
+     loopback_mode                              4B3       1       1       4   .common     
+     ascii_out                                  4B4       1       1       2   .common     
+     take_measurements                          4B5       1       1       2   .common     
      _SRS                                      1800       1       1       0   .abs_section_1800
      _SBDFR                                    1801       1       1       0   .abs_section_1801
      _SOPT1                                    1802       1       1       1   .abs_section_1802
@@ -1267,7 +1272,7 @@ OBJECT LIST SORTED BY ADDRESS
      init_can                                  1B26      BF     191       1   .text       
      generate_new_source_address               1BE5      14      20       3   .text       
      address_claim_message                     1BF9      6E     110       3   .text       
-     transmit_iso                              1C67      7A     122       2   .text       
+     transmit_iso                              1C67      7A     122       3   .text       
      receive_isr                               1CE1      22      34       1   .text       
      print_to_serial                           1D03      25      37       2   .text       
      iso_pdu1_rx                               1D28     1B9     441       3   .text       
@@ -1275,71 +1280,71 @@ OBJECT LIST SORTED BY ADDRESS
      calc_conversions                          1EED      45      69       1   .text       
      calc_voltages                             1F32      53      83       1   .text       
      calc_currents                             1F85      C2     194       2   .text       
-     output_power_messages                     2047      E7     231       2   .text       
-     init_io                                   212E      41      65       1   .text       
-     init_leds                                 216F       B      11       1   .text       
-     toggle_led                                217A      11      17       3   .text       
-     off_led                                   218B      11      17       1   .text       
-     main                                      219C      9A     154       1   .text       
-     init_mcg                                  2236       D      13       1   .text       
-     pee                                       2243      2E      46       1   .text       
-     pbe                                       2271      44      68       2   .text       
-     fbe                                       22B5      43      67       2   .text       
-     fbi                                       22F8      31      49       1   .text       
-     rprintf_devopen                           2329       4       4       1   .text       
-     init_rtc                                  232D      16      22       1   .text       
-     register_rtc_callback                     2343      1E      30       1   .text       
-     rtc_isr                                   2361      26      38       1   .text       
-     init_serial                               2387       B      11       1   .text       
-     putcint1                                  2392       7       7       1   .text       
-     putc1                                     2399       E      14       4   .text       
-     putcontrol1                               23A7      12      18       2   .text       
-     puts1                                     23B9      52      82       5   .text       
-     cir_inc                                   240B      1A      26       2   .text       
-     cir_dec                                   2425      19      25       1   .text       
-     tx1_open_isr                              243E      67     103       1   .text       
-     init_timers                               24A5       1       1       1   .text       
-     _PUSH_ARGS_L                              24A6      20      32       2   .text       
-     _ENTER_UNARY_L                            24C6      29      41       1   .text       
-     _ENTER_BINARY_L                           24EF      16      22       3   .text       
-     _ENTER_BINARY_L_RC                        2505      19      25       6   .text       
-     _IDIVMOD                                  251E      69     105       1   .text       
-     _SPLITSIGN                                2587      1C      28       1   .text       
-     _LADD_k_is_k_plus_j                       25A3      1F      31       1   .text       
-     _k_is_k_plus_j_l                          25C2      1E      30       2   .text       
-     _k_is_k_plus_j_i                          25E0      12      18       3   .text       
-     _LSUB_k_is_k_minus_j                      25F2      1F      31       1   .text       
-     _LAND_k_is_k_and_j                        2611      1F      31       1   .text       
-     _LMUL_k_is_k_mul_j                        2630      81     129       2   .text       
-     _LDIVMOD                                  26B1      A4     164       2   .text       
-     _NEG_L_HX                                 2755      13      19       3   .text       
-     _ABS_L_HX                                 2768       6       6       2   .text       
-     _SPLITSIGN_L                              276E       A      10       2   .text       
-     _LMODS_k_is_k_mod_j                       2778      18      24       1   .text       
-     _LDIVS_k_is_k_div_j                       2790      27      39       2   .text       
-     _LCMP_k_rel_j                             27B7      1F      31       1   .text       
-     _IMUL_STAR08                              27D6      27      39       1   .text       
-     _IMODS_STAR08                             27FD      25      37       1   .text       
-     _ILSR                                     2822       C      12       1   .text       
-     _LADD_RC                                  282E       6       6       3   .text       
-     _LSUB                                     2834       6       6       1   .text       
-     _LAND_RC                                  283A       6       6       1   .text       
-     _LMUL                                     2840       6       6       3   .text       
-     _LMUL_RC                                  2846       6       6       2   .text       
-     _LDIVS                                    284C       6       6       1   .text       
-     _LDIVS_RC                                 2852       6       6       1   .text       
-     _LMODS_RC                                 2858       6       6       1   .text       
-     _LLSL                                     285E      16      22       1   .text       
-     _LCMP_RC                                  2874       6       6       4   .text       
-     _COPY                                     287A      30      48       1   .text       
-     _POP32                                    28AA      1A      26      10   .text       
-     _SEXT16_32                                28C4       D      13       2   .text       
-     _Jump_Table_Header_Offset                 28D1      24      36       1   .text       
-     _PUSH_CC                                  28F5       F      15       1   .text       
-     _POP_CC                                   2904       F      15       1   .text       
-     rand                                      2913      6B     107       1   .text       
-     srand                                     297E       9       9       1   .text       
-     _memcpy_8bitCount                         2987      24      36       1   .text       
+     output_power_messages                     2047     144     324       3   .text       
+     init_io                                   218B      41      65       1   .text       
+     init_leds                                 21CC       B      11       1   .text       
+     toggle_led                                21D7      11      17       3   .text       
+     off_led                                   21E8      11      17       1   .text       
+     main                                      21F9      9A     154       1   .text       
+     init_mcg                                  2293       D      13       1   .text       
+     pee                                       22A0      2E      46       1   .text       
+     pbe                                       22CE      44      68       2   .text       
+     fbe                                       2312      43      67       2   .text       
+     fbi                                       2355      31      49       1   .text       
+     rprintf_devopen                           2386       4       4       1   .text       
+     init_rtc                                  238A      16      22       1   .text       
+     register_rtc_callback                     23A0      1E      30       1   .text       
+     rtc_isr                                   23BE      26      38       1   .text       
+     init_serial                               23E4       B      11       1   .text       
+     putcint1                                  23EF       7       7       1   .text       
+     putc1                                     23F6       E      14       4   .text       
+     putcontrol1                               2404      12      18       2   .text       
+     puts1                                     2416      52      82       5   .text       
+     cir_inc                                   2468      1A      26       2   .text       
+     cir_dec                                   2482      19      25       1   .text       
+     tx1_open_isr                              249B      67     103       1   .text       
+     init_timers                               2502       1       1       1   .text       
+     _PUSH_ARGS_L                              2503      20      32       2   .text       
+     _ENTER_UNARY_L                            2523      29      41       1   .text       
+     _ENTER_BINARY_L                           254C      16      22       3   .text       
+     _ENTER_BINARY_L_RC                        2562      19      25       6   .text       
+     _IDIVMOD                                  257B      69     105       1   .text       
+     _SPLITSIGN                                25E4      1C      28       1   .text       
+     _LADD_k_is_k_plus_j                       2600      1F      31       1   .text       
+     _k_is_k_plus_j_l                          261F      1E      30       2   .text       
+     _k_is_k_plus_j_i                          263D      12      18       3   .text       
+     _LSUB_k_is_k_minus_j                      264F      1F      31       1   .text       
+     _LAND_k_is_k_and_j                        266E      1F      31       1   .text       
+     _LMUL_k_is_k_mul_j                        268D      81     129       2   .text       
+     _LDIVMOD                                  270E      A4     164       2   .text       
+     _NEG_L_HX                                 27B2      13      19       3   .text       
+     _ABS_L_HX                                 27C5       6       6       2   .text       
+     _SPLITSIGN_L                              27CB       A      10       2   .text       
+     _LMODS_k_is_k_mod_j                       27D5      18      24       1   .text       
+     _LDIVS_k_is_k_div_j                       27ED      27      39       2   .text       
+     _LCMP_k_rel_j                             2814      1F      31       1   .text       
+     _IMUL_STAR08                              2833      27      39       1   .text       
+     _IMODS_STAR08                             285A      25      37       1   .text       
+     _ILSR                                     287F       C      12       1   .text       
+     _LADD_RC                                  288B       6       6       3   .text       
+     _LSUB                                     2891       6       6       1   .text       
+     _LAND_RC                                  2897       6       6       1   .text       
+     _LMUL                                     289D       6       6       3   .text       
+     _LMUL_RC                                  28A3       6       6       2   .text       
+     _LDIVS                                    28A9       6       6       1   .text       
+     _LDIVS_RC                                 28AF       6       6       1   .text       
+     _LMODS_RC                                 28B5       6       6       1   .text       
+     _LLSL                                     28BB      16      22       1   .text       
+     _LCMP_RC                                  28D1       6       6       4   .text       
+     _COPY                                     28D7      30      48       1   .text       
+     _POP32                                    2907      1A      26      10   .text       
+     _SEXT16_32                                2921       D      13       2   .text       
+     _Jump_Table_Header_Offset                 292E      24      36       1   .text       
+     _PUSH_CC                                  2952       F      15       1   .text       
+     _POP_CC                                   2961       F      15       1   .text       
+     rand                                      2970      6B     107       1   .text       
+     srand                                     29DB       9       9       1   .text       
+     _memcpy_8bitCount                         29E4      24      36       1   .text       
      _Vector_28                                FFC6       2       2       0   .abs_section_ffc6
      _Vector_25                                FFCC       2       2       0   .abs_section_ffcc
      _Vector_23                                FFD0       2       2       0   .abs_section_ffd0
@@ -1392,22 +1397,22 @@ string.o (ansiis.lib):
 *********************************************************************************************
 COPYDOWN SECTION
 ---------------------------------------------------------------------------------------------
-------- ROM-ADDRESS: 0x29AB ---- SIZE       4 ---
+------- ROM-ADDRESS: 0x2A08 ---- SIZE       4 ---
 Filling bytes inserted
  000E0100
-------- ROM-ADDRESS: 0x29AF ---- RAM-ADDRESS: 0x100 ---- SIZE       8 ---
+------- ROM-ADDRESS: 0x2A0C ---- RAM-ADDRESS: 0x100 ---- SIZE       8 ---
 Name of initialized Object : name
  6162636400 AAA0C0
-------- ROM-ADDRESS: 0x29B7 ---- RAM-ADDRESS: 0x108 ---- SIZE       2 ---
+------- ROM-ADDRESS: 0x2A14 ---- RAM-ADDRESS: 0x108 ---- SIZE       2 ---
 Name of initialized Object : buf1_end
  FFFF
-------- ROM-ADDRESS: 0x29B9 ---- SIZE       3 ---
+------- ROM-ADDRESS: 0x2A16 ---- SIZE       3 ---
 Filling bytes inserted
  000000
-------- ROM-ADDRESS: 0x29BC ---- RAM-ADDRESS: 0x10D ---- SIZE       1 ---
+------- ROM-ADDRESS: 0x2A19 ---- RAM-ADDRESS: 0x10D ---- SIZE       1 ---
 Name of initialized Object : seed:3
  01
-------- ROM-ADDRESS: 0x29BD ---- SIZE       2 ---
+------- ROM-ADDRESS: 0x2A1A ---- SIZE       2 ---
 Filling bytes inserted
  0000
 
@@ -1448,7 +1453,8 @@ calc_conversions          USES ad_raw_vals conv_ref _LDIVS conv _POP32
 calc_voltages             USES V_meas ad_raw_vals _LMUL voltages 
 calc_currents             USES C_meas ad_raw_vals _SEXT16_32 _POP32 _LMUL 
                                 _LADD_RC currents calc_currents 
-output_power_messages     USES powers transmit_iso output_power_messages 
+output_power_messages     USES powers output_power_messages transmit_iso 
+                                dir_counter.2 wind_counter.1 
 init_io                   USES _PTGDD _PTGPE _PTGD loopback_mode ascii_out 
                                 take_measurements 
 init_leds                 USES _PTCDD _PTBDD off_led 
@@ -1762,6 +1768,6 @@ STATISTIC SECTION
 
 ExeFile:
 --------
-Number of blocks to be downloaded: 9
-Total size of all blocks to be downloaded: 4297
+Number of blocks to be downloaded: 8
+Total size of all blocks to be downloaded: 4390
 

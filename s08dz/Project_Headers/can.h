@@ -14,6 +14,9 @@
 #define BATTERY_STATUS_PGN_LENGTH	8
 #define MAX_ADDRESS_TRIES			32
 
+#define WIND_STATUS_PGN			130306
+#define WIND_STATUS_PGN_LENGTH	6
+
 #define ADDRESS_CLAIM_PGN			60928
 #define ADDRESS_CLAIM_PGN_LENGTH	8
 
@@ -106,6 +109,17 @@ union BatteryStatus {
 	} Bits;
 };
 
+union WindStatus {
+	byte data[6];
+	
+	// no guarantee that this will be in the right order
+	struct {
+		byte sid;
+		int windspeed;
+		int winddir;
+		byte ref;
+	} fields;
+};
 // these are 16 bit masks and acceptance filters, want to split between PDU1 and PDU2
 // ISO appears to be only on DP 0, so use that as only criteria
 // Everything that is an extended identifier is accepted by something, could remove that criteria too

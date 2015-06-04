@@ -128,6 +128,9 @@ void output_power_messages()
 	byte i;
 	iso_m m;
 	union BatteryStatus bs; 
+	union WindStatus ws;
+	static int wind_counter = 0;
+	static int dir_counter = 0;
 	
 	for (i=0; i<3; i++) { //i<POWER_LEN; i++) {
 #ifdef CAN_OUT
@@ -144,4 +147,12 @@ void output_power_messages()
 	
 #endif
 	}
+	
+	ws.fields.sid = 0xFF;
+	ws.fields.ref = 0;
+	ws.fields.winddir = dir_counter++;
+	ws.fields.windspeed = wind_counter++;
+	m.bits.data = ws.data;
+	ISO_M(WIND_STATUS_PGN);
+	transmit_iso(&m);
 }
